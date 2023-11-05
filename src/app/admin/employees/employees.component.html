@@ -27,18 +27,18 @@
       
       
       <div class="row pages">
-        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0" *ngFor="let user of Employees">
+        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0" *ngFor="let employee of Employees">
         
          
                             <div class="card card-lift--hover shadow featured-block d-flex justify-content-center align-items-center">
                               <a class="close">        
-                                <button mat-fab aria-label="Example icon button with a delete icon"(click)="openDeleteDailog(user.employeeid)"class="button">
+                                <button mat-fab aria-label="Example icon button with a delete icon"(click)="openDeleteDailog(employee.employeeid)"class="button">
                                   <mat-icon  class="icon">close</mat-icon>
                                 </button>
                                 
                               </a>
                                  <a class="edit">        
-                                     <button mat-fab aria-label="Example icon button with a delete icon" (click)="openEditDailog(user)"class="button-check">
+                                     <button mat-fab aria-label="Example icon button with a delete icon" (click)="openEditDailog(employee)"class="button-check">
                                       <mat-icon class="icon">edit</mat-icon>
                                    </button>
                                                   
@@ -46,16 +46,18 @@
 
                               <div class="custom-block">
 
-                                  <img src="../../assets/img/{{user.image}}" class="custom-block-image img-fluid " alt="">
-
-
                                   <div class="custom-block-body">
-                                      
-                                      <h3 class="mb-3">{{ user.username }}</h3>
-              
-                                      <p>{{user.email }}</p>
-                                      <p>{{ displayPassword(user.password) }}</p>
-                                      <p>{{ getRoleName(user.roleid) }}</p>
+                                    <h3 class="mb-3">{{ employee.firstname }}</h3>
+                                    <h3 class="mb-3">{{ employee.lastname }}</h3>
+
+                                      <h3 class="mb-3">{{ employee.username }}</h3>
+                                      <p>          
+                                            <mat-label class="email">email</mat-label>
+                                        {{employee.email }}
+                                      </p>
+                                      <p>{{ displayPassword(employee.password) }}</p>
+                                      <p>{{ employee.roleid}}</p>
+                                      <p>{{employee.salary }}</p>
 
                                   
                                       </div>
@@ -88,19 +90,52 @@
   <h2>Edit User</h2>
   </div>
   <form class="example-container" [formGroup]="edit">
-  <mat-form-field appearance="outline">
-  <mat-label>Enter User Name</mat-label>
-  <input matInput type="text" placeholder="Enter user name" formControlName="username">
-  <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
-  </mat-form-field>
-  <div class="form-field-spacer"></div>
-  
-  <mat-form-field appearance="outline">
-  <mat-label>Enter Email</mat-label>
-  <input matInput type="email" placeholder="Enter email" formControlName="email" readonly>
-  
-  </mat-form-field>
-  <div class="form-field-spacer"></div>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter User Name</mat-label>
+      <input matInput type="text" placeholder="Enter user name" formControlName="username">
+      <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
+    </mat-form-field>
+    <div class="form-field-spacer"></div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter First Name</mat-label>
+      <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
+      <mat-error *ngIf="form.get('firstname')?.hasError('required')">First name is required</mat-error>
+    </mat-form-field>
+    
+    <div class="form-field-spacer">
+
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter Last Name</mat-label>
+      <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
+      <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
+    </mat-form-field>
+    <div class="form-field-spacer"></div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter Salary</mat-label>
+      <input matInput type="text" placeholder="Enter Salary" formControlName="salary">
+      <mat-error *ngIf="form.get('salary')?.hasError('required')">salary is required</mat-error>
+    </mat-form-field>
+
+    <div class="form-field-spacer"></div>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter Email</mat-label>
+      <input matInput type="email" placeholder="Enter email" formControlName="email" readonly>
+    </mat-form-field>
+
+    <div class="form-field-spacer"></div>
+    <mat-form-field>
+      <mat-label>Select Department</mat-label>
+  <mat-select formControlName="departmentid" required>
+    <mat-option *ngFor="let department of departments" [value]="department.departmentid">
+      {{ department.departmentname }}
+    </mat-option>
+  </mat-select>
+
+    </mat-form-field>
+ 
   
   <mat-form-field appearance="outline">
   <mat-label>Enter password</mat-label>
@@ -110,7 +145,7 @@
   
   
   <div class="dialog-footer">
-  <button mat-raised-button color="primary" (click)="updateEmployee()" >Edit</button>
+  <button mat-raised-button color="primary" mat-dialog-close="yes" >Edit</button>
   </div>
   </form>
   </div>
@@ -118,10 +153,12 @@
         </div>
     </div>
   </div>
+
+  
   <ng-template #callCreateDialog>
     <div class="mat-dialog-container">
       <div class="dialog-header">
-        <h2>Add User</h2>
+        <h2>Add Employee</h2>
       </div>
       <form class="example-container" [formGroup]="form">
         <mat-form-field appearance="outline">
@@ -132,10 +169,43 @@
         <div class="form-field-spacer"></div>
 
         <mat-form-field appearance="outline">
+          <mat-label>Enter First Name</mat-label>
+          <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
+          <mat-error *ngIf="form.get('firstname')?.hasError('required')">First name is required</mat-error>
+        </mat-form-field>
+        
+        <div class="form-field-spacer">
+
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Last Name</mat-label>
+          <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
+          <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Salary</mat-label>
+          <input matInput type="text" placeholder="Enter Salary" formControlName="salary">
+          <mat-error *ngIf="form.get('salary')?.hasError('required')">salary is required</mat-error>
+        </mat-form-field>
+
+        <div class="form-field-spacer"></div>
+        <mat-form-field appearance="outline">
           <mat-label>Enter Email</mat-label>
           <input matInput type="email" placeholder="Enter email" formControlName="email">
           <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
           <mat-error *ngIf="form.get('email')?.hasError('pattern')">Invalid email format</mat-error>
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
+        <mat-form-field>
+          <mat-label>Select Department</mat-label>
+      <mat-select formControlName="departmentid" required>
+        <mat-option *ngFor="let department of departments" [value]="department.departmentid">
+          {{ department.departmentname }}
+        </mat-option>
+      </mat-select>
+
         </mat-form-field>
         <div class="form-field-spacer"></div>
 

@@ -4,6 +4,7 @@ import { EmployeeService } from 'src/app/service/employee.service';
 import { ToastrService } from 'ngx-toastr'; 
 import { FormGroup, FormControl,Validators } from '@angular/forms';   
 import { MatDialog } from '@angular/material/dialog';
+import { DepartmentService } from 'src/app/service/department.service';
 
 @Component({
   selector: 'app-employees',
@@ -19,29 +20,31 @@ export class EmployeesComponent implements OnInit {
   Employees: any[] = [];
   hide = true;
   hidee = true;
-id :any
-  constructor( private employeeService: EmployeeService,private toastr: ToastrService,private dialog:MatDialog) {}
+  departments: any[] = [];
+  constructor( private employeeService: EmployeeService,private departmentService: DepartmentService, private toastr: ToastrService,private dialog:MatDialog) {}
 
 
   ngOnInit(): void {
     this.getEmployees();
-  
+    this.getDepartments();
+
   }
 
   form :FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
+    salary: new FormControl('', [Validators.required]),
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-
-
+    departmentid: new FormControl('', [Validators.required]),
   });
 
   edit :FormGroup  = new FormGroup({
-    id: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required]),
+    employeeid: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
+    salary: new FormControl('', [Validators.required]),
     email: new FormControl(''),
-    password: new FormControl('')
+    departmentid: new FormControl('', [Validators.required]),
 
   });
 
@@ -58,6 +61,8 @@ id :any
   this.dialog.open(this.callCreateDialog);
   
   }
+
+
   getEmployees() {
     this.employeeService.getEmployees().subscribe((Employee) => {
       this.Employees = Employee;
@@ -65,31 +70,63 @@ id :any
 
   }
 
-  getRoleName(roleid: number): string {
-    const roleMap: { [key: number]: string } = {
-      1: 'Admin',
-      2: 'User',
-    };
-    return roleMap[roleid] || 'Unknown'; 
-  }
+  
+    getDepartments() {
+      this.departmentService.getDepartments().subscribe((departments) => {
+        this.departments = departments;
+        console.log("departments" ,departments)
+      });
+  
+    }
 
   displayPassword(password: string): string {
     return '*'.repeat(password.length); 
   }
 
-  
-  openEditDailog(user: any) {
+
+  openEditDailog(employee: any){
     this.edit.setValue({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      password: user.password,
-    
+      employeeid: employee.employeeid,
+      firstname: employee.firstname,
+      lastname: employee.lastname,
+      salary: employee.salary,
+      email: employee.email,
+      departmentid: employee.departmentid,
+
     });
-    this.dialog.open(this.callEditDailog);
-
-  }
-
+    const dialogRef= this.dialog.open(this.callEditDailog);
+    dialogRef.afterClosed().subscribe((result)=>{
+       if(result!=undefined)
+       {
+        if (result == 'yes') {
+          this.employeeService.updateEmployee(employee.employeeid, this.edit.value).subscribe(
+            (response) => {
+              console.log( this.edit.value);
+      
+              console.log('Employee name updated successfully:', response);
+              this.toastr.success('Employee updated successfully.', 'Success');
+              this.getEmployees(); 
+      
+              this.dialog.closeAll();
+            
+            },
+            (error) => {
+              console.log( this.edit.value);
+      
+              console.log('Error while update employee:', error);
+                this.toastr.error('Error while update employee.', 'Error'); 
+      
+            }
+          );   
+        } else if (result == 'no') {
+          console.log("Thank you");
+        }
+        
+           
+       }
+ 
+    })
+   }
   openDeleteDailog(id:number){
     console.log(id)
 
@@ -138,26 +175,6 @@ id :any
           });
           
   }
-  updateEmployee() {
-    this.employeeService.updateEmployee(this.id, this.edit.value).subscribe(
-      (response) => {
-        console.log( this.edit.value);
 
-        console.log('Employee name updated successfully:', response);
-        this.toastr.success('Employee updated successfully.', 'Success');
-        this.getEmployees(); 
-
-        this.dialog.closeAll();
-      
-      },
-      (error) => {
-        console.log( this.edit.value);
-
-        console.log('Error while update employee:', error);
-          this.toastr.error('Error while update employee.', 'Error'); 
-
-      }
-    );
-  }
 
 }

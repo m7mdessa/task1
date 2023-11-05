@@ -1,1 +1,112 @@
-<p>register works!</p>
+
+<main>
+    <section class="section  section-lg">
+      <div class="shape shape-style-1 bg-gradient-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="container pt-lg-md">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="card bg-secondary shadow border-0">
+              
+              <div class="card-body px-lg-5 py-lg-5">
+                <div class="text-center text-muted mb-4">
+                  <h3>SING UP</h3>
+                </div>
+                <form role="form" [formGroup]="registerForm">
+                  <div class="form-group" [ngClass]="{'focused':focus===true}">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Name" type="text" (focus)="focus=true"formControlName="username"  (blur)="focus=false">
+                    </div>
+                    <div *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="error-message">
+                        <div *ngIf="registerForm.get('username')?.errors?.['required'] as requiredError"class="text-danger">
+                           user name is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" [ngClass]="{'focused':focus1===true}">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Email" type="email" (focus)="focus1=true"formControlName="email"  (blur)="focus1=false">
+                    </div>
+                    <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)"
+                                class="error-message">
+                                <div *ngIf="registerForm.get('email')?.errors?.['required'] as requiredError"class="text-danger">
+                                    email is required
+
+                              </div>
+                       
+                            </div>
+                  </div>
+                  <div class="form-group" [ngClass]="{'focused':focus2===true}">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Password" type="password"(blur)="matchError()" formControlName="password"(focus)="focus2=true" (blur)="focus2=false">
+                      
+                    </div>
+                    <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)"
+                    class="error-message">
+                    <div *ngIf="registerForm.get('password')?.errors?.['required'] as requiredError"class="text-danger">
+                        passsword is required
+                    </div>
+                    <div *ngIf="registerForm.get('password')?.errors?.['minlength'] as minlengthError"class="text-danger">
+                        Password should be mor than 8 digit.
+                    </div>
+                    </div> 
+                  </div>
+               
+                  <div class="form-group" [ngClass]="{'focused':focus2===true}">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Repeat Password"(blur)="matchError()"type="password" formControlName="repeatPassword"(focus)="focus2=true" (blur)="focus2=false">
+                    </div>
+                    <div *ngIf="registerForm.get('repeatPassword')?.invalid && (registerForm.get('repeatPassword')?.dirty || registerForm.get('repeatPassword')?.touched)"
+                    class="error-message">
+                    <div *ngIf="registerForm.get('repeatPassword')?.errors?.['required'] as requiredError"class="text-danger">
+                        Repeat Password is required
+                    </div>
+                    <div *ngIf="registerForm.get('repeatPassword')?.errors?.['minlength'] as minlengthError"class="text-danger">
+                        Repeat Password should be mor than 8 digit.
+                    </div>
+              
+                    <div *ngIf="registerForm.get('repeatPassword')?.hasError('misMatch')"
+                    class="error-message"class="text-danger">Passwords do not match</div>
+                    </div>
+                  </div>
+                  <div class="row my-4">
+                    <div class="col-12">
+                      <div class="custom-control custom-control-alternative custom-checkbox">
+                 
+                            <a (click)="toLogin()" class="link">Do you have an account?</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary mt-4 link"[disabled]="!registerForm.valid"(click)="register()">Create account</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
