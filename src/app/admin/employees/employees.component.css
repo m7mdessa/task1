@@ -1,0 +1,82 @@
+.pages{
+    position: relative;
+    left: 137px;
+  }
+  .edit{
+    position: absolute;
+    top: 2px;
+    left: -2px;
+    padding: 4px 8px;
+    border-radius: 11px;
+  }
+  .button-check {
+    background-color: #5e72e4;
+    padding: 6px;
+    font-size: 12px;
+    width: 35px;
+    height: 35px;
+  }
+  .close {
+    position: absolute;
+    top: 3px;
+    right: -3px;
+    padding: 4px 8px;
+    border-radius: 11px;
+  }
+  .icon{
+    color: #fff;
+    background: none;
+  
+  }
+  .button {
+    background-color: rgb(73, 73, 73);
+    padding: 6px;
+    font-size: 12px;
+    width: 35px;
+    height: 35px;
+  }
+  .add-button {
+    background-color: green;
+  
+  }
+  .img-fluid {
+    width: 100px;
+    height: auto;
+    position: relative;
+    left: 56px;
+    border-radius: 55px;
+}
+
+.mat-dialog-container {
+    padding: 24px;
+    width: 400px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+  }
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .dialog-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+  }
+
+  .example-container {
+    width: 100%;
+  }.mat-dialog-container {
+    width: 400px; /* Adjust the width as needed */
+  }
+  
+  .dialog-header {
+    text-align: center;
+    padding: 16px;
+  }
+  
