@@ -27,19 +27,12 @@
             "styles": [
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css",
-              "src/assets/userAssets/css/bootstrap-icons.css",
-              "src/assets/userAssets/css/bootstrap.min.css",
-              "src/assets/userAssets/css/templatemo-kind-heart-charity.css",
-              "node_modules/ngx-toastr/toastr.css",
-              "src/assets/scss/argon.scss"
+           
+              "node_modules/ngx-toastr/toastr.css"
 
             ],
             "scripts": [
-              "src/assets/userAssets/js/bootstrap.min.js",
-              "src/assets/userAssets/js/jquery.min.js",
-              "src/assets/userAssets/js/jquery.sticky.js",
-              "src/assets/userAssets/js/counter.js",
-              "src/assets/userAssets/js/custom.js"
+           
 
 
             ]

@@ -1,163 +1,156 @@
-<div id="wrapper">
-    <app-sidebar></app-sidebar>
-  
-    <div id="content-wrapper" class="d-flex flex-column">
-  
-        <app-nav></app-nav>
-        <div class="container-fluid">
-  
-      
+<app-sidebar></app-sidebar>
+
+<section class="content">
+  <div class="body_scroll">
       <div class="block-header">
           <div class="row">
-              <div class="col-lg-3 col-md-6 col-sm-12">
-                  <h2>Employees List</h2>
+              <div class="col-lg-7 col-md-6 col-sm-12">
                   <ul class="breadcrumb">
-                      <li class="breadcrumb-item"><a ><i class="zmdi zmdi-home"></i> Admin</a></li>
-                  <li class="breadcrumb-item">Employees</li>
+                      <li class="breadcrumb-item"><a><i class="zmdi zmdi-home"></i> Admin</a></li>
+                      <li class="breadcrumb-item active">Employees List</li>
                   </ul>
+                  <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
               </div>
-            
-          </div>
-        
-      </div>
-      <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
+              <div class="col-lg-5 col-md-6 col-sm-12">                
+  <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
         <mat-icon  class="icon">add</mat-icon>
       </button>
+              </div>
+          </div>
+      </div>
+      <br>
+      <br>
+      <div class="container-fluid">
+          <div class="row clearfix">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="table-responsive">
+                          <table class="table table-hover product_item_list">
+                              <thead>
+                                  <tr>
+                                      <th>First Name</th>
+                                      <th>Last Name</th>
+                                      <th data-breakpoints="sm xs">Email</th>
+                                      <th data-breakpoints="xs">Salary</th>
+                                      <th data-breakpoints="xs md">Department</th>
+                                      <th data-breakpoints="sm xs md">Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let employee of Employees">
+                                      <td><span class="text-muted">{{ employee.firstname }}</span></td>
+                                      <td><span class="text-muted">{{ employee.lastname }}</span></td>
+                                      <td><span class="text-muted">{{ employee.email }}</span></td>
 
-      
-      
-      <div class="row pages">
-        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0" *ngFor="let employee of Employees">
-        
-         
-                            <div class="card card-lift--hover shadow featured-block d-flex justify-content-center align-items-center">
-                              <a class="close">        
-                                <button mat-fab aria-label="Example icon button with a delete icon"(click)="openDeleteDailog(employee.employeeid)"class="button">
-                                  <mat-icon  class="icon">close</mat-icon>
-                                </button>
-                                
-                              </a>
-                                 <a class="edit">        
-                                     <button mat-fab aria-label="Example icon button with a delete icon" (click)="openEditDailog(employee)"class="button-check">
-                                      <mat-icon class="icon">edit</mat-icon>
-                                   </button>
-                                                  
-                                 </a>
-
-                              <div class="custom-block">
-
-                                  <div class="custom-block-body">
-                                    <h3 class="mb-3">{{ employee.firstname }}</h3>
-                                    <h3 class="mb-3">{{ employee.lastname }}</h3>
-                                      <p>          
-                                            <mat-label class="email">email</mat-label>
-                                        {{employee.email }}
-                                      </p>
-                                      <p>{{employee.salary }}</p>
-                                      <p>{{employee.departmentname }}</p>
-
+                                      <td>${{ employee.salary }}</td>
+                                      <td><span class="col-green">{{employee.departmentname }}</span></td>
+                                      <td>
+                                        <a (click)="openEditDailog(employee)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
+                                        <a (click)="openDeleteDailog(employee.employeeid)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
+                                    </td>
                                   
-                                      </div>
-              
-                                  </div>
-              
-                              </div>
-                            </div>
-          
-          
-                
-       
-        </div>
-   
+                                  </tr>
+                                 
+                                
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div >                            
+                          
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ng-template #callDeleteDailog>
+    <div style="padding:15px">
+<h2>Are you sure you want to delete this employee?</h2>
+<button class="btn btn-primary m-1"   mat-dialog-close="yes">Yes</button>
+<button class="btn btn-danger m-1"  mat-dialog-close="no">No</button> 
+</div>
+</ng-template>  
       
-      <ng-template #callDeleteDailog>
-        <div style="padding:15px">
-    <h2>Are you sure you want to delete this user?</h2>
-    <button class="btn btn-primary m-1"   mat-dialog-close="yes">Yes</button>
-    <button class="btn btn-danger m-1"  mat-dialog-close="no">No</button> 
-    </div>
-    </ng-template>  
-          
-  
-  
-  
-  <ng-template #callEditDailog>
-  <div class="mat-dialog-container">
-  <div class="dialog-header">
-  <h2>Edit Employee</h2>
-  </div>
-  <form class="example-container" [formGroup]="edit">
-    <mat-form-field appearance="outline">
-      <mat-label>Enter Employee Name</mat-label>
-      <input matInput type="text" placeholder="Enter user name" formControlName="username">
-      <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
-    </mat-form-field>
-    <div class="form-field-spacer"></div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Enter First Name</mat-label>
-      <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
-      <mat-error *ngIf="form.get('firstname')?.hasError('required')">First name is required</mat-error>
-    </mat-form-field>
-    
-    <div class="form-field-spacer">
 
-    </div>
-    <mat-form-field appearance="outline">
-      <mat-label>Enter Last Name</mat-label>
-      <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
-      <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
-    </mat-form-field>
-    <div class="form-field-spacer"></div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Enter Salary</mat-label>
-      <input matInput type="text" placeholder="Enter Salary" formControlName="salary">
-      <mat-error *ngIf="form.get('salary')?.hasError('required')">salary is required</mat-error>
-    </mat-form-field>
+<ng-template #callEditDailog>
+<div class="mat-dialog-container">
+<div class="dialog-header">
+<h2>Edit Employee</h2>
+</div>
+<form class="example-container" [formGroup]="edit">
 
-    <div class="form-field-spacer"></div>
-    <mat-form-field appearance="outline">
-      <mat-label>Enter Email</mat-label>
-      <input matInput type="email" placeholder="Enter email" formControlName="email" readonly>
-    </mat-form-field>
 
-    <div class="form-field-spacer"></div>
-    <mat-form-field>
-      <mat-label>Select Department</mat-label>
-  <mat-select formControlName="departmentid" required>
-    <mat-option *ngFor="let department of departments" [value]="department.departmentid">
-      {{ department.departmentname }}
-    </mat-option>
-  </mat-select>
+<mat-form-field appearance="outline">
+  <mat-label>Enter First Name</mat-label>
+  <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
+  <mat-error *ngIf="form.get('firstname')?.hasError('required')">First name is required</mat-error>
+</mat-form-field>
 
-    </mat-form-field>
- 
+<div class="form-field-spacer">
 
-  
-  <div class="dialog-footer">
-  <button mat-raised-button color="primary" mat-dialog-close="yes" >Edit</button>
-  </div>
-  </form>
-  </div>
-  </ng-template>
-        </div>
-    </div>
-  </div>
+</div>
+<mat-form-field appearance="outline">
+  <mat-label>Enter Last Name</mat-label>
+  <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
+  <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
+</mat-form-field>
+<div class="form-field-spacer"></div>
 
-  
+<mat-form-field appearance="outline">
+  <mat-label>Enter Salary</mat-label>
+  <input matInput type="text" placeholder="Enter Salary" formControlName="salary">
+  <mat-error *ngIf="form.get('salary')?.hasError('required')">salary is required</mat-error>
+</mat-form-field>
+
+<div class="form-field-spacer"></div>
+<mat-form-field appearance="outline">
+  <mat-label>Enter Email</mat-label>
+  <input matInput type="email" placeholder="Enter email" formControlName="email" readonly>
+</mat-form-field>
+
+<div class="form-field-spacer"></div>
+<mat-form-field>
+  <mat-label>Select Department</mat-label>
+<mat-select formControlName="departmentid" required>
+<mat-option *ngFor="let department of departments" [value]="department.departmentid">
+  {{ department.departmentname }}
+</mat-option>
+</mat-select>
+
+</mat-form-field>
+
+
+
+<div class="dialog-footer">
+<button mat-raised-button color="primary" mat-dialog-close="yes" >Edit</button>
+</div>
+</form>
+</div>
+</ng-template>
   <ng-template #callCreateDialog>
     <div class="mat-dialog-container">
       <div class="dialog-header">
         <h2>Add Employee</h2>
       </div>
       <form class="example-container" [formGroup]="form">
-        <mat-form-field appearance="outline">
-          <mat-label>Enter Employee Name</mat-label>
-          <input matInput type="text" placeholder="Enter user name" formControlName="username">
-          <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
-        </mat-form-field>
-        <div class="form-field-spacer"></div>
+     
 
         <mat-form-field appearance="outline">
           <mat-label>Enter First Name</mat-label>

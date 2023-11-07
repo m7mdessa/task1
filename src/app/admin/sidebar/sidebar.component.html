@@ -1,56 +1,34 @@
 
-  
 
 
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " >
+<aside id="leftsidebar" class="sidebar">
 
-    
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" >
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-
-        <li class="nav-item">
-            <a routerLink="/admin/profile"class="nav-link collapsed" ><span>Profile</span></a>
-    
-        </li>
-        <li class="nav-item">
-            <a routerLink="/admin/Users"class="nav-link collapsed"><span>Users</span></a>
-    
-        </li>
-        <li class="nav-item">
-            <a routerLink="/admin" class="nav-link collapsed"><span>Employees</span></a>
-    
-        </li>
-        <li class="nav-item">
-            <a routerLink="/admin/Departments"class="nav-link collapsed"><span>Departments</span></a>
-    
-        </li>
-    
+    <div class="menu">
+        <ul class="list">
+          
+            <li>
+                <a routerLink="/admin"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
+            
+            </li>
+           
+            <li>
+                <a routerLink="/admin/profile"><span>Profile</span></a>
         
-        <li class="nav-item">
-            <a (click)="logout()" href="" style=" cursor: pointer;"class="nav-link collapsed"><span>Log Out</span></a>
-    
-        </li>
-     
+            </li>
+            <li>
+                <a routerLink="/admin/Users"><span>Users</span></a>
+        
+            </li>
+            <li>
+                <a routerLink="/admin/Employees"><span>Employees</span></a>
+        
+            </li>
+            <li>
+                <a routerLink="/admin/Departments"><span>Departments</span></a>
+        
+            </li>
+               
+        </ul>
+    </div>
+</aside>
 
-
-    <hr class="sidebar-divider">
-
-
-   
-
-</ul>
-
-
-  
