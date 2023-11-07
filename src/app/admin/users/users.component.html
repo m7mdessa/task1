@@ -1,0 +1,170 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+  
+    <div id="content-wrapper" class="d-flex flex-column">
+  
+        <app-nav></app-nav>
+        <div class="container-fluid">
+  
+      
+      <div class="block-header">
+          <div class="row">
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                  <h2>Users List</h2>
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a ><i class="zmdi zmdi-home"></i> Admin</a></li>
+                  <li class="breadcrumb-item">Users</li>
+                  </ul>
+              </div>
+            
+          </div>
+        
+      </div>
+      <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
+        <mat-icon  class="icon">add</mat-icon>
+      </button>
+
+      
+      
+      <div class="row pages">
+        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0" *ngFor="let user of users">
+        
+         
+                            <div class="card card-lift--hover shadow featured-block d-flex justify-content-center align-items-center">
+                              <a class="close">        
+                                <button mat-fab aria-label="Example icon button with a delete icon"(click)="openDeleteDailog(user.id)"class="button">
+                                  <mat-icon  class="icon">close</mat-icon>
+                                </button>
+                                
+                              </a>
+                                 <a class="edit">        
+                                     <button mat-fab aria-label="Example icon button with a delete icon" (click)="openEditDailog(user)"class="button-check">
+                                      <mat-icon class="icon">edit</mat-icon>
+                                   </button>
+                                                  
+                                 </a>
+
+                              <div class="custom-block">
+
+
+
+                                  <div class="custom-block-body">
+                                      
+                                      <h3 class="mb-3">{{ user.username }}</h3>
+              
+                                      <p>{{user.email }}</p>
+                                      <p>{{ displayPassword(user.password) }}</p>
+                                      <p>{{ user.rolename }}</p>
+
+                                  
+                                      </div>
+              
+                                  </div>
+              
+                              </div>
+                            </div>
+          
+          
+                
+       
+        </div>
+   
+      
+      <ng-template #callDeleteDailog>
+        <div style="padding:15px">
+    <h2>Are you sure you want to delete this user?</h2>
+    <button class="btn btn-primary m-1"   mat-dialog-close="yes">Yes</button>
+    <button class="btn btn-danger m-1"  mat-dialog-close="no">No</button> 
+    </div>
+    </ng-template>  
+          
+  
+  
+  
+ <!-- <ng-template #callEditDailog>
+  <div class="mat-dialog-container">
+  <div class="dialog-header">
+  <h2>Edit User</h2>
+  </div>
+  <form class="example-container" [formGroup]="edit">
+  <mat-form-field appearance="outline">
+  <mat-label>Enter User Name</mat-label>
+  <input matInput type="text" placeholder="Enter user name" formControlName="username">
+  <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
+  </mat-form-field>
+  <div class="form-field-spacer"></div>
+  
+  <mat-form-field appearance="outline">
+  <mat-label>Enter Email</mat-label>
+  <input matInput type="email" placeholder="Enter email" formControlName="email" readonly>
+  
+  </mat-form-field>
+  <div class="form-field-spacer"></div>
+  
+  <mat-form-field appearance="outline">
+  <mat-label>Enter password</mat-label>
+  <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password"readonly>
+  
+  </mat-form-field>
+  
+  
+  <div class="dialog-footer">
+  <button mat-raised-button color="primary" (click)="updateUser()" >Edit</button>
+  </div>
+  </form>
+  </div>
+  </ng-template>--> 
+        </div>
+    </div>
+  </div>
+  <ng-template #callCreateDialog>
+    <div class="mat-dialog-container">
+      <div class="dialog-header">
+        <h2>Add User</h2>
+      </div>
+      <form class="example-container" [formGroup]="form">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter User Name</mat-label>
+          <input matInput type="text" placeholder="Enter user name" formControlName="username">
+          <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Email</mat-label>
+          <input matInput type="email" placeholder="Enter email" formControlName="email">
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('pattern')">Invalid email format</mat-error>
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
+
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Confirm password</mat-label>
+          <input matInput [type]="hidee ? 'confirmPassword' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
+          <button mat-icon-button matSuffix (click)="hidee = !hidee" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidee">
+            <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
+
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
+
+        </mat-form-field>
+
+        <div class="dialog-footer">
+          <button mat-raised-button color="primary" (click)="addUser()" [disabled]="!form.valid">Add</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>

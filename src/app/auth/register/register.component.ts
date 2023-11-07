@@ -4,6 +4,7 @@ import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
+import { DepartmentService } from 'src/app/service/department.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -15,15 +16,24 @@ export class RegisterComponent implements OnInit{
   focus: any;
   focus1: any;
   focus2: any;
-  constructor( private router: Router, private authService: AuthService,private toastr: ToastrService) {}
- 
+  departments: any[] = [];
+
+  constructor( private router: Router, private authService: AuthService,private departmentService: DepartmentService,private toastr: ToastrService) {}
+  
+  ngOnInit(): void {
+    this.getDepartments();
+    }
+
   registerForm :FormGroup = new FormGroup({
 
+    firstname: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
     username: new FormControl('', Validators.required),
     email:new FormControl( '', [Validators.required, ]),
     password:new FormControl( '', [Validators.required, Validators.minLength(8), ]),
     repeatPassword: new FormControl('', [Validators.required, Validators.minLength(8) ]),
-    
+    departmentid: new FormControl('', [Validators.required]),
+
   })
 
   matchError() {
@@ -35,6 +45,13 @@ export class RegisterComponent implements OnInit{
   }
 
 
+  getDepartments() {
+    this.departmentService.getDepartments().subscribe((departments) => {
+      this.departments = departments;
+      console.log("departments" ,departments)
+    });
+
+  }
   register() {
 
     this.authService.Register(this.registerForm.value).subscribe((resp:any)=>{
@@ -51,16 +68,6 @@ export class RegisterComponent implements OnInit{
     });
   }
  
-
-  ngOnInit(): void {
-    this.registerForm  = new FormGroup({
-      username : new FormControl('',Validators.required),
-      email:new FormControl ('',[Validators.required,Validators.email]),
-      password:new FormControl  ('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+$/)]),
-      repeatPassword:new FormControl  ('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+$/)])
-    })
-    }
-
   onSubmit() {
     if (this.registerForm.valid) {
       console.log('Form submitted!', this.registerForm.value);

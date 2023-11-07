@@ -49,15 +49,12 @@
                                   <div class="custom-block-body">
                                     <h3 class="mb-3">{{ employee.firstname }}</h3>
                                     <h3 class="mb-3">{{ employee.lastname }}</h3>
-
-                                      <h3 class="mb-3">{{ employee.username }}</h3>
                                       <p>          
                                             <mat-label class="email">email</mat-label>
                                         {{employee.email }}
                                       </p>
-                                      <p>{{ displayPassword(employee.password) }}</p>
-                                      <p>{{ employee.roleid}}</p>
                                       <p>{{employee.salary }}</p>
+                                      <p>{{employee.departmentname }}</p>
 
                                   
                                       </div>
@@ -87,11 +84,11 @@
   <ng-template #callEditDailog>
   <div class="mat-dialog-container">
   <div class="dialog-header">
-  <h2>Edit User</h2>
+  <h2>Edit Employee</h2>
   </div>
   <form class="example-container" [formGroup]="edit">
     <mat-form-field appearance="outline">
-      <mat-label>Enter User Name</mat-label>
+      <mat-label>Enter Employee Name</mat-label>
       <input matInput type="text" placeholder="Enter user name" formControlName="username">
       <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
     </mat-form-field>
@@ -136,13 +133,7 @@
 
     </mat-form-field>
  
-  
-  <mat-form-field appearance="outline">
-  <mat-label>Enter password</mat-label>
-  <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password"readonly>
-  
-  </mat-form-field>
-  
+
   
   <div class="dialog-footer">
   <button mat-raised-button color="primary" mat-dialog-close="yes" >Edit</button>
@@ -162,7 +153,7 @@
       </div>
       <form class="example-container" [formGroup]="form">
         <mat-form-field appearance="outline">
-          <mat-label>Enter User Name</mat-label>
+          <mat-label>Enter Employee Name</mat-label>
           <input matInput type="text" placeholder="Enter user name" formControlName="username">
           <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
         </mat-form-field>
@@ -207,31 +198,7 @@
       </mat-select>
 
         </mat-form-field>
-        <div class="form-field-spacer"></div>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Enter password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password">
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
-          <mat-error *ngIf="form.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
-
-        </mat-form-field>
-        <div class="form-field-spacer"></div>
-        <mat-form-field appearance="outline">
-          <mat-label>Enter Confirm password</mat-label>
-          <input matInput [type]="hidee ? 'confirmPassword' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
-          <button mat-icon-button matSuffix (click)="hidee = !hidee" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidee">
-            <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
-          <mat-error *ngIf="form.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
-
-          <mat-error *ngIf="form.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
-
-        </mat-form-field>
+     
 
         <div class="dialog-footer">
           <button mat-raised-button color="primary" (click)="addEmployee()" [disabled]="!form.valid">Add</button>

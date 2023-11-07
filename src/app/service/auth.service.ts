@@ -18,7 +18,7 @@ export class AuthService {
 
   Register(Register: any): Observable<any>{
 
-    return  this.http.post('https://localhost:7225/api/Auth/Register/',Register);
+    return  this.http.post('https://localhost:7088/api/Auth/Register/',Register);
  
   }
 
@@ -39,7 +39,7 @@ export class AuthService {
       headers: new HttpHeaders(headerDict)
     }
     
-    this.http.post('https://localhost:7225/api/Auth/Login/', Login, requestOptions).subscribe((res: any) => {
+    this.http.post('https://localhost:7088/api/Auth/Login/', Login, requestOptions).subscribe((res: any) => {
      
       const responce = { token: res.toString() }
       localStorage.setItem('token', responce.token);
@@ -65,13 +65,13 @@ export class AuthService {
 
   Forgotpassword(Forgotpassword: any): Observable<any>{
 
-    return  this.http.post('https://localhost:7225/api/Auth/Forgotpassword/',Forgotpassword);
+    return  this.http.post('https://localhost:7088/api/Auth/Forgotpassword/',Forgotpassword);
  
   }
 
   Resetpassword(Resetpassword: any): Observable<any>{
 
-    return  this.http.post('https://localhost:7225/api/Auth/Resetpassword/',Resetpassword);
+    return  this.http.post('https://localhost:7088/api/Auth/Resetpassword/',Resetpassword);
  
   }
 
