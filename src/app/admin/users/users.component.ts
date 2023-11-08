@@ -65,14 +65,7 @@ export class UsersComponent implements OnInit {
 
   }
 
-  getRoleName(roleid: number): string {
-    const roleMap: { [key: number]: string } = {
-      1: 'Admin',
-      2: 'User',
-    };
-    return roleMap[roleid] || 'Unknown'; 
-  }
-
+ 
   displayPassword(password: string): string {
     return '*'.repeat(password.length); 
   }

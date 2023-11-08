@@ -11,10 +11,7 @@
             
             </li>
            
-            <li>
-                <a routerLink="/admin/profile"><span>Profile</span></a>
         
-            </li>
             <li>
                 <a routerLink="/admin/Users"><span>Users</span></a>
         
@@ -32,3 +29,12 @@
     </div>
 </aside>
 
+<div class="navbar-right">
+    <ul class="navbar-nav">
+        <li><a href="#search" class="main_search" title="Search..."><i class="zmdi zmdi-search"></i></a></li>
+        
+        <li><a routerLink="/admin/profile"  title="Account"><i class="zmdi zmdi-account-circle"></i></a></li>
+       
+        <li><a (click)="logout()" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
+    </ul>
+</div>

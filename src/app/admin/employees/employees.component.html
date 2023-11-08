@@ -5,6 +5,8 @@
       <div class="block-header">
           <div class="row">
               <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Dashboard</h2>
+                    <br>
                   <ul class="breadcrumb">
                       <li class="breadcrumb-item"><a><i class="zmdi zmdi-home"></i> Admin</a></li>
                       <li class="breadcrumb-item active">Employees List</li>
@@ -38,6 +40,7 @@
                               </thead>
                               <tbody>
                                   <tr *ngFor="let employee of Employees">
+
                                       <td><span class="text-muted">{{ employee.firstname }}</span></td>
                                       <td><span class="text-muted">{{ employee.lastname }}</span></td>
                                       <td><span class="text-muted">{{ employee.email }}</span></td>
@@ -100,7 +103,7 @@
 <mat-form-field appearance="outline">
   <mat-label>Enter First Name</mat-label>
   <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
-  <mat-error *ngIf="form.get('firstname')?.hasError('required')">First name is required</mat-error>
+  <mat-error *ngIf="edit.get('firstname')?.hasError('required')">First name is required</mat-error>
 </mat-form-field>
 
 <div class="form-field-spacer">
@@ -109,20 +112,21 @@
 <mat-form-field appearance="outline">
   <mat-label>Enter Last Name</mat-label>
   <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
-  <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
+  <mat-error *ngIf="edit.get('lastname')?.hasError('required')">Last name is required</mat-error>
 </mat-form-field>
 <div class="form-field-spacer"></div>
 
 <mat-form-field appearance="outline">
   <mat-label>Enter Salary</mat-label>
   <input matInput type="text" placeholder="Enter Salary" formControlName="salary">
-  <mat-error *ngIf="form.get('salary')?.hasError('required')">salary is required</mat-error>
+  <mat-error *ngIf="edit.get('salary')?.hasError('required')">salary is required</mat-error>
 </mat-form-field>
 
 <div class="form-field-spacer"></div>
 <mat-form-field appearance="outline">
   <mat-label>Enter Email</mat-label>
   <input matInput type="email" placeholder="Enter email" formControlName="email" readonly>
+  
 </mat-form-field>
 
 <div class="form-field-spacer"></div>

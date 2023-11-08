@@ -51,6 +51,17 @@
               </div>                
                  </div>
                  <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Phone"formControlName="phone">
+              
+
+                </div>
+                <div *ngIf="registerForm.get('phone')?.invalid && (registerForm.get('phone')?.dirty || registerForm.get('phone')?.touched)"
+                class="error-message">
+                <div *ngIf="registerForm.get('phone')?.errors?.['required'] as requiredError"class="text-danger">
+                  phone is required
+              </div>                
+                 </div>
+                 <div class="input-group mb-3">
                 <input type="password" class="form-control"(blur)="matchError()" placeholder="Password"formControlName="password">
                          
                  </div>

@@ -9,6 +9,7 @@ import { NavComponent } from './nav/nav.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NavComponent,
     SidebarComponent,
     UsersComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

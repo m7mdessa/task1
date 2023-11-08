@@ -52,8 +52,8 @@ export class AuthService {
         this.toastr.success('Welcome On Admin Dashboard');
         this.router.navigate(['admin']);
       } else if (data.Role == "2") {
-        this.toastr.success('Welcome On User Dashboard');
-        this.router.navigate(['user/Profile']);
+        this.toastr.success('Welcome On Employee Profile');
+        this.router.navigate(['employee/Profile']);
       } else {
         this.toastr.error('Something wrong!!');
         this.router.navigate(['']);

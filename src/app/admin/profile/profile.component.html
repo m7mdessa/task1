@@ -1,0 +1,66 @@
+
+<app-sidebar></app-sidebar>
+
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Profile</h2>
+                    <br>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a><i class="zmdi zmdi-home"></i> Admin</a></li>
+                        <li class="breadcrumb-item">Profile</li>
+                    </ul>
+                </div>
+          
+            </div>
+        </div> 
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Security</strong> Settings</h2>
+                        </div>
+                        <div class="body">
+                            <form [formGroup]="updateForm">
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Username"formControlName="username">
+                                        <mat-error *ngIf="updateForm.get('username')?.hasError('required')">Username is required</mat-error>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control"formControlName="password"(change)="matchError()"  placeholder="Current Password">
+                                    </div>
+                                    <mat-error *ngIf="updateForm.get('password')?.hasError('required')">Password is required</mat-error>
+                                    <mat-error *ngIf="updateForm.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control"formControlName="confirmPassword"(change)="matchError()" placeholder="New Password">
+                                    </div>
+                                    <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
+                                    <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
+                                
+                                    <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-info"(click)="updateAdmin()" [disabled]="!updateForm.valid" >Save Changes</button>
+                                </div>                                
+                            </div>   
+                            </form>                           
+                        </div>
+                    </div>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -17,36 +17,12 @@ export class SidebarComponent implements OnInit {
   constructor( private router: Router) {}
   ngOnInit(): void {
   
-//this.GetAllNotifications();
-   // this.GetNumberOfNotifications();
 
   }
 
-  //GetAllNotifications() {
-   //this.adminService.GetAllNotifications().subscribe(
-      //(notifications) => {
-       // this.notifications = notifications;
-     
-     // },
-    //  (error) => {
-       // console.error('Error while fetching notifications:', error);
-    //  }
-      
-    //); 
-    
-  // }
    logout() {
     localStorage.clear();
     this.router.navigate(['']);
   }
-   //GetNumberOfNotifications() {
-   // this.adminService.GetNumberOfNotifications().subscribe(
-   //   (NumberOffNotifications) => {
-       // this.NumberOffNotifications = NumberOffNotifications;
-      //},
-    //  (error) => {
-      //  console.error('Error while fetching number of notifications:', error);
-    //  }
-    //);
-  //}
+  
 }

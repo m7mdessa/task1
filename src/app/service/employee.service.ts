@@ -11,6 +11,16 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
+
+  GetProfile(id: number): Observable<any> {
+    return this.http.get<any>('https://localhost:7088/api/Employee/GetProfile/'+id);
+  }
+
+  UpdateProfile(employee: any): Observable<any> {
+
+    return this.http.put('https://localhost:7088/api/Employee/UpdateProfile/', employee);
+
+  }
   getEmployees(): Observable<any[]> {
     return this.http.get<any[]>('https://localhost:7088/api/Employee');
   }
@@ -26,9 +36,9 @@ export class EmployeeService {
  
   }
 
-  updateEmployee(id: number,Employee: any): Observable<any> {
+  updateEmployee(Employee: any): Observable<any> {
 
-    return this.http.put('https://localhost:7088/api/Employee/Update/'+id,Employee);
+    return this.http.put('https://localhost:7088/api/Employee/Update/',Employee);
 
   }
 

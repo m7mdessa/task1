@@ -1,0 +1,91 @@
+
+<nav class="navbar navbar-expand-lg bg-light shadow-lg"[ngClass]="{ 'sticky-element': isSticky }">
+    <div class="container">
+        
+
+        <div class="collapse navbar-collapse" >
+            <ul class="navbar-nav ms-auto">
+               
+                <li class="nav-item">
+                  <a class="nav-link custom-btn custom-border-btn btn" routerLink="/">Home</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link custom-btn custom-border-btn btn" routerLink="/about">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link custom-btn custom-border-btn btn" routerLink="/Charities">Charities</a>
+                </li>
+                <li class="nav-item dropdown">
+                 
+              </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link custom-btn custom-border-btn btn"  routerLink="/contact">Contact</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link "[matMenuTriggerFor]="menuu"*ngIf="user">     
+                                             <mat-icon class="notifications">notifications</mat-icon>
+        
+                    </a>
+                    <mat-menu #menuu="matMenu">
+                        <button mat-menu-item>
+                          <mat-icon>dialpad</mat-icon>
+                          <span>Profile</span>
+                        </button>
+                       
+                        <button mat-menu-item>
+                          <mat-icon>notifications</mat-icon>
+                          <span>Disable alerts</span>
+                        </button>
+                      </mat-menu>
+                </li>
+
+                <li class="nav-item dropdown"*ngIf="user">
+                    <a  class="nav-link"[matMenuTriggerFor]="menu"*ngFor="let profile of profile">
+                      <img src="../../assets/img/{{profile.image}}" class="rounded-circle">
+                      </a>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item routerLink="/user/Profile">
+                            <mat-icon>account_circle</mat-icon>
+                            <span>Profile</span>
+                          </button>
+                      
+                          <button mat-menu-item routerLink="/user/Donations">
+                            <mat-icon>money</mat-icon>
+                            <span>Donations</span>
+                          </button>
+                          <button mat-menu-item routerLink="/user/Issues">
+                            <mat-icon>report_problem</mat-icon>
+                            <span>Issues</span>
+                          </button>
+                          <button mat-menu-item routerLink="/user/Testimonial">
+                            <mat-icon>comment</mat-icon>
+                            <span>Testimonial</span>
+                          </button>
+                          <button mat-menu-item routerLink="/user/Charities">
+                            <mat-icon>favorite</mat-icon>
+                            <span>Charities</span>
+                          </button>
+                        <button mat-menu-item  (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Sing Out</span>
+                        </button>
+                      </mat-menu>
+                </li>
+
+                <li class="nav-item ms-3"*ngIf="!user">
+                    <a class="nav-link custom-btn custom-border-btn btn" routerLink="/auth/login">Sing In</a>
+                </li>
+                
+                <li class="nav-item ms-3" *ngIf="!user">
+                    <a class="nav-link custom-btn custom-border-btn btn" routerLink="/auth/register">Sing Up</a>
+                </li>
+              
+       
+            </ul>
+        
+        </div>
+    </div>
+</nav>

@@ -4,6 +4,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [  
 
@@ -11,7 +12,7 @@ const routes: Routes = [
 
 {path:'', component:DashboardComponent},
 
-//{path:'profile', component:ProfileComponent},
+{path:'profile', component:ProfileComponent},
 
 {path:'Departments', component:DepartmentsComponent},
 

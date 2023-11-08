@@ -30,9 +30,9 @@ export class RegisterComponent implements OnInit{
     lastname: new FormControl('', Validators.required),
     username: new FormControl('', Validators.required),
     email:new FormControl( '', [Validators.required, ]),
+    phone:new FormControl( '', [Validators.required, ]),
     password:new FormControl( '', [Validators.required, Validators.minLength(8), ]),
     repeatPassword: new FormControl('', [Validators.required, Validators.minLength(8) ]),
-    departmentid: new FormControl('', [Validators.required]),
 
   })
 

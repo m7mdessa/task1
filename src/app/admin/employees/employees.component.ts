@@ -79,11 +79,6 @@ export class EmployeesComponent implements OnInit {
   
     }
 
-  displayPassword(password: string): string {
-    return '*'.repeat(password.length); 
-  }
-
-
   openEditDailog(employee: any){
     this.edit.setValue({
       employeeid: employee.employeeid,
@@ -99,7 +94,7 @@ export class EmployeesComponent implements OnInit {
        if(result!=undefined)
        {
         if (result == 'yes') {
-          this.employeeService.updateEmployee(employee.employeeid, this.edit.value).subscribe(
+          this.employeeService.updateEmployee( this.edit.value).subscribe(
             (response) => {
               console.log( this.edit.value);
       
