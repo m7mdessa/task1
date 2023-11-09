@@ -16,8 +16,10 @@ export class EmployeesComponent implements OnInit {
   @ViewChild('callCreateDialog') callCreateDialog! :TemplateRef<any>
   @ViewChild('callDeleteDailog') callDelete!:TemplateRef<any>
   @ViewChild('callEditDailog') callEditDailog!:TemplateRef<any>
+  @ViewChild('callDetailDailog') callDetailDailog!:TemplateRef<any>
 
   Employees: any[] = [];
+  Employee: any;
   hide = true;
   hidee = true;
   departments: any[] = [];
@@ -36,6 +38,8 @@ export class EmployeesComponent implements OnInit {
     salary: new FormControl('', [Validators.required]),
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
     departmentid: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
+
   });
 
   edit :FormGroup  = new FormGroup({
@@ -45,6 +49,7 @@ export class EmployeesComponent implements OnInit {
     salary: new FormControl('', [Validators.required]),
     email: new FormControl(''),
     departmentid: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
 
   });
 
@@ -61,7 +66,14 @@ export class EmployeesComponent implements OnInit {
   this.dialog.open(this.callCreateDialog);
   
   }
-
+  OpenDialogDetail(id:number){
+    
+    this.dialog.open(this.callDetailDailog);
+    this.employeeService.getEmployee(id).subscribe( (Employee) => {
+        this.Employee = Employee;
+      
+      });  
+    }
 
   getEmployees() {
     this.employeeService.getEmployees().subscribe((Employee) => {
@@ -87,6 +99,7 @@ export class EmployeesComponent implements OnInit {
       salary: employee.salary,
       email: employee.email,
       departmentid: employee.departmentid,
+      phone: employee.phone,
 
     });
     const dialogRef= this.dialog.open(this.callEditDailog);

@@ -29,6 +29,8 @@ export class ProfileComponent implements OnInit {
   updateForm : FormGroup = new FormGroup({
     
     employeeid: new FormControl(),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
 
@@ -66,7 +68,7 @@ export class ProfileComponent implements OnInit {
         console.log('User updated successfully:', responsee);
         this.toastr.success('User updated successfully.', 'Success');
          this.updateForm.reset();
-         this.dialog.closeAll();      
+         this.getProfile();      
  
       
       },

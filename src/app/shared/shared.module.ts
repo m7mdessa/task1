@@ -19,14 +19,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FilterPipe } from '../Pipes/filter.pipe';
 
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
+    FilterPipe
 
-    
   ],
   imports: [
     CommonModule,
@@ -48,6 +49,7 @@ import { NavbarComponent } from './navbar/navbar.component';
      MatToolbarModule,
      MatDatepickerModule,
      MatNativeDateModule,
+     
   ],
   exports:[
     MatCardModule,
@@ -67,7 +69,8 @@ import { NavbarComponent } from './navbar/navbar.component';
    MatToolbarModule,
    MatDatepickerModule,
    MatNativeDateModule,
-   NavbarComponent
+   NavbarComponent,
+   FilterPipe
   ]
 })
 export class SharedModule { }

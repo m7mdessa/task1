@@ -15,9 +15,7 @@ nav {
     top: 0;
     width: 100%;
   }
-  .notifications{
-
-  }
+ 
 
   .rounded-circle {
     width: 45px;
@@ -45,6 +43,16 @@ nav {
     left: 500px;
 }
 
-.custom{
-
+.navbar-collapse {
+  display: -ms-flexbox!important;
+  display: flex!important;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+  position: absolute;
+  right: 123px;
+}
+.logo{
+  position: absolute;
+  top: 6px;
+  font-weight: 700;
 }
