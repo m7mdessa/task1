@@ -23,11 +23,13 @@
   .example-container {
     width: 100%;
   }.mat-dialog-container {
-    width: 1000px; /* Adjust the width as needed */
+    width: 400px; /* Adjust the width as needed */
   }
   
   .dialog-header {
     text-align: center;
     padding: 16px;
   }
-  
+  .list-group-item-heading{
+cursor: pointer;
+  }

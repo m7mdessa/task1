@@ -14,8 +14,11 @@ export class DepartmentsComponent implements OnInit {
   @ViewChild('callCreateDialog') callCreateDialog! :TemplateRef<any>
   @ViewChild('callDeleteDailog') callDelete!:TemplateRef<any>
   @ViewChild('callEditDailog') callEditDailog!:TemplateRef<any>
+  @ViewChild('callDetailDailog') callDetailDailog!:TemplateRef<any>
 
     departments: any[] = [];
+    department: any;
+
     id:any;
     constructor(private departmentService: DepartmentService,  private toastr: ToastrService,private dialog:MatDialog) {}
   
@@ -48,6 +51,14 @@ OpenDialogAdd(){
   this.dialog.open(this.callCreateDialog);
   
   }
+  OpenDialogDetail(id:number){
+    
+    this.dialog.open(this.callDetailDailog);
+    this.departmentService.getDepartment(id).subscribe( (department) => {
+        this.department = department;
+      
+      });  
+    }
 
 
   openEditDailog(department: any){

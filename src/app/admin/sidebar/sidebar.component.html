@@ -49,7 +49,7 @@
 <ng-template #callSearchDialog>
     <div class="mat-dialog-container">
       <div class="dialog-header">
-        <h2>Search Employee</h2>
+        <h2>Search</h2>
       </div>
 
       <div class="card">
@@ -63,49 +63,29 @@
         </div>
       </div>
      
-       <div class="card">
-        <div class="table-responsive"*ngIf="filterText">
-            <table class="table table-hover product_item_list">
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th data-breakpoints="sm xs">Email</th>
-                        <th data-breakpoints="sm xs">Phone</th>
-                        <th data-breakpoints="xs">Salary</th>
-                        <th data-breakpoints="xs md">Department</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of Employees | filter : filterText ">
-
-                        <td><span class="text-muted">{{ employee.firstname }}</span></td>
-                        <td><span class="text-muted">{{ employee.lastname }}</span></td>
-                        <td><span class="text-muted">{{ employee.email }}</span></td>
-                        <td><span class="text-muted">{{ employee.phone }}</span></td>
-
-                        <td>${{ employee.salary }}</td>
-                        <td><span class="col-green">{{employee.departmentname }}</span></td>
-                      
-                    
-                    </tr>
-                   
-                  
-                </tbody>
-            </table>
-        </div>
+       <div class="card"*ngIf="filterText">
+        <div class="list-group">
+            <div class="list-group-item" *ngFor="let item of (employeesAndDepartments | filter: filterText)">
+              <ng-container *ngIf="item.firstname">
+                <h5 class="list-group-item-heading"(click)="OpenEmployeeDetail(item.employeeid)">{{ item.firstname }} {{ item.lastname }}</h5>
+              
+              </ng-container>
+          
+              <ng-container *ngIf="item.departmentname">
+                <h5 class="list-group-item-heading"(click)="OpenDepartmentDetail(item.departmentid)">Department: <span class="col-green">{{ item.departmentname }}</span></h5>
+              </ng-container>
+            </div>
+          </div>
+          
     </div>
     </div>
   </ng-template>
 
-  <ng-template #callDetailDailog>
+  <ng-template #callDetailEmployee>
     <div class="mat-dialog-container">
     <div class="dialog-header">
     <h2>Employee Detail</h2>
     </div>
-    
-    
-  
     <div *ngIf="Employee">
       <p><strong>First Name:</strong> {{ Employee.firstname }}</p>
       <p><strong>Last Name:</strong> {{ Employee.lastname }}</p>
@@ -114,6 +94,20 @@
       <p><strong>Department:</strong> {{ Employee.departmentname }}</p>
       <p><strong>Salary:</strong> {{ Employee.salary }}</p>
   
+    </div>
+    </div>
+    </ng-template>
+
+    
+<ng-template #callDetailDepartment>
+    <div class="mat-dialog-container">
+    <div class="dialog-header">
+    <h2>Department Detail</h2>
+    </div>
+    <div *ngIf="department">
+      <p><strong>Department Name:</strong> {{ department.departmentname }}</p>
+      <p><strong>Department Location:</strong> {{ department.departmentlocation }}</p>
+    
     </div>
     </div>
     </ng-template>

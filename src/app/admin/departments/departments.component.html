@@ -44,6 +44,7 @@
                                       <td><span class="text-muted">{{ department.departmentlocation }}</span></td>
 
                                       <td>
+                                        <a (click)="OpenDialogDetail(department.departmentid)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
                                         <a (click)="openEditDailog(department)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
                                         <a (click)="openDeleteDailog(department.departmentid)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
                                     </td>
@@ -104,6 +105,21 @@
       
 
 
+<ng-template #callDetailDailog>
+  <div class="mat-dialog-container">
+  <div class="dialog-header">
+  <h2>Department Detail</h2>
+  </div>
+  
+  
+
+  <div *ngIf="department">
+    <p><strong>Department Name:</strong> {{ department.departmentname }}</p>
+    <p><strong>Department Location:</strong> {{ department.departmentlocation }}</p>
+  
+  </div>
+  </div>
+  </ng-template>
 
 <ng-template #callEditDailog>
 <div class="mat-dialog-container">
