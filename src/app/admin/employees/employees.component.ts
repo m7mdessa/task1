@@ -147,7 +147,9 @@ export class EmployeesComponent implements OnInit {
             () => {
               this.Employees = this.Employees.filter((Employee) => Employee.id !== id);
               console.log('Employee deleted successfully.');
-              this.dialog.closeAll();      
+              this.dialog.closeAll();  
+              this.getEmployees(); 
+    
             },
             (error) => {
               console.log('Error while deleting Employee:', error);

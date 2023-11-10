@@ -10,18 +10,19 @@ import { AuthService } from 'src/app/service/auth.service';
 
 })
 export class LoginComponent {
+required: any;
 
   constructor(public authService: AuthService,private router: Router) {
 
   }
-  focus: any;
-focus1: any;
-  hide = true;
+ 
 
-  username:FormControl = new FormControl('',[Validators.required]);
-  password:FormControl= new FormControl('');
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required, Validators.minLength(8)]);
   
   
+  
+
   loginError: string | null = null; 
 
   login() {

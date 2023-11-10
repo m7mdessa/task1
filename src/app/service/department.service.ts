@@ -26,9 +26,9 @@ export class DepartmentService {
  
   }
 
-  updateDepartment(id: number,department: any): Observable<any> {
+  updateDepartment(department: any): Observable<any> {
 
-    return this.http.put('https://localhost:7088/api/Department/Update/'+id,department);
+    return this.http.put('https://localhost:7088/api/Department/Update/',department);
 
   }
 

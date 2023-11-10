@@ -73,7 +73,7 @@ OpenDialogAdd(){
        if(result!=undefined)
        {
         if (result == 'yes') {
-          this.departmentService.updateDepartment(department.departmentid,this.edit.value).subscribe(
+          this.departmentService.updateDepartment(this.edit.value).subscribe(
             (response) => {
               console.log( this.edit.value);
       
