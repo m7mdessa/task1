@@ -23,6 +23,7 @@ export class EmployeesComponent implements OnInit {
   hide = true;
   hidee = true;
   departments: any[] = [];
+
   constructor( private employeeService: EmployeeService,private departmentService: DepartmentService, private toastr: ToastrService,private dialog:MatDialog) {}
 
 
@@ -39,7 +40,9 @@ export class EmployeesComponent implements OnInit {
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
     departmentid: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
   edit :FormGroup  = new FormGroup({
@@ -90,7 +93,8 @@ export class EmployeesComponent implements OnInit {
       });
   
     }
-
+      
+   
   openEditDailog(employee: any){
     this.edit.setValue({
       employeeid: employee.employeeid,
@@ -100,18 +104,20 @@ export class EmployeesComponent implements OnInit {
       email: employee.email,
       departmentid: employee.departmentid,
       phone: employee.phone,
+   
 
     });
+    
     const dialogRef= this.dialog.open(this.callEditDailog);
     dialogRef.afterClosed().subscribe((result)=>{
        if(result!=undefined)
        {
         if (result == 'yes') {
-          this.employeeService.updateEmployee( this.edit.value).subscribe(
+          this.employeeService.updateEmployee(this.edit.value).subscribe(
             (response) => {
               console.log( this.edit.value);
       
-              console.log('Employee name updated successfully:', response);
+              console.log('Employee name updated successfully:', this.edit.value);
               this.toastr.success('Employee updated successfully.', 'Success');
               this.getEmployees(); 
       
@@ -135,6 +141,7 @@ export class EmployeesComponent implements OnInit {
  
     })
    }
+   
   openDeleteDailog(id:number){
     console.log(id)
 

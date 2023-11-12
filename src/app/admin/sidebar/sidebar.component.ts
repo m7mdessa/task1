@@ -30,6 +30,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
   this.getEmployees();
   this.getDepartments();
+  this.mergeData();
 
   }
   getEmployee(id:number){

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/service/department.service';
+import { EmployeeService } from 'src/app/service/employee.service';
 
 @Component({
   selector: 'app-departments',
@@ -18,14 +19,16 @@ export class DepartmentsComponent implements OnInit {
 
     departments: any[] = [];
     department: any;
+    Employees: any[] = [];
+    employeesAndDepartments: any[] = [];
 
-    id:any;
-    constructor(private departmentService: DepartmentService,  private toastr: ToastrService,private dialog:MatDialog) {}
+    constructor( private employeeService: EmployeeService,private departmentService: DepartmentService,  private toastr: ToastrService,private dialog:MatDialog) {}
   
  
     ngOnInit(): void {
       this.getDepartments();
-  
+        this.mergeData();
+
     }
     
     getDepartments() {
@@ -33,6 +36,15 @@ export class DepartmentsComponent implements OnInit {
         this.departments = departments;
       });
   
+    }
+    getEmployees() {
+      this.employeeService.getEmployees().subscribe((Employee) => {
+        this.Employees = Employee;
+      });
+  
+    }
+    mergeData() {
+      this.employeesAndDepartments = [...this.Employees, ...this.departments];
     }
     form :FormGroup = new FormGroup({
       departmentname: new FormControl('',[Validators.required]),

@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/service/admin.service';
 import { EmployeeService } from 'src/app/service/employee.service';
+import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
 
   profile: any[] = [];
 
-  constructor(private employee: EmployeeService,private toastr: ToastrService,private dialog:MatDialog ) {}
+  constructor(private employee: ProfileService,private toastr: ToastrService,private dialog:MatDialog ) {}
 
   
   ngOnInit(): void {
@@ -61,7 +62,7 @@ export class ProfileComponent implements OnInit {
       console.log('No user data found in local storage.');
     }
     this.updateForm.get('employeeid')?.setValue(employeeId);
-    this.employee.UpdateProfile(this.updateForm.value).subscribe(
+    this.employee.UpdateEmployee(this.updateForm.value).subscribe(
       (responsee) => {
         console.log( this.updateForm.value);
 
@@ -93,7 +94,7 @@ export class ProfileComponent implements OnInit {
     } else {
       console.log('No user data found in local storage.');
     }
-    this.employee.GetProfile(employeeId).subscribe((profile) => {
+    this.employee.GetProfileEmployee(employeeId).subscribe((profile) => {
       this.profile = profile;
       console.log('profile',profile);
 

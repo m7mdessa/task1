@@ -16,7 +16,7 @@ export class ForgotpasswordComponent implements OnInit{
   constructor( private router: Router, private authService: AuthService,private toastr: ToastrService) {}
    
   emailForm :FormGroup = new FormGroup({
-    email:new FormControl ('',[Validators.required,Validators.email]),
+    email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
   })
 
  

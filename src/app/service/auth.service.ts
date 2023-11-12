@@ -13,7 +13,10 @@ import { ToastrService } from 'ngx-toastr';
 
 export class AuthService {
 
-  constructor(private http: HttpClient,private router: Router,private toastr:ToastrService) { }
+
+
+
+  constructor(public http: HttpClient,private router: Router,private toastr:ToastrService) { }
 
 
   Register(Register: any): Observable<any>{
@@ -24,7 +27,7 @@ export class AuthService {
 
   Login(username: any, password: any) {
 
-    
+ 
     var Login = {
       username: username.value.toString(),
       password: password.value.toString(),
@@ -75,7 +78,18 @@ export class AuthService {
  
   }
 
+  IsUsernameTaken(username: string): Observable<boolean> {
+    
+    return this.http.get<boolean>('https://localhost:7088/api/Auth/checkUsername/'+username);
 
+  }
+
+
+  IsEmailTaken(email: string): Observable<boolean> {
+    
+    return this.http.get<boolean>('https://localhost:7088/api/Auth/checkEmail/'+email);
+
+  }
 }
 
 

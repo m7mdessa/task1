@@ -197,6 +197,12 @@
           <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
         </mat-form-field>
         <div class="form-field-spacer"></div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter User Name</mat-label>
+          <input matInput type="text" placeholder="Enter user name" formControlName="username">
+          <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
 
         <mat-form-field appearance="outline">
           <mat-label>Enter Salary</mat-label>
@@ -228,7 +234,29 @@
       </mat-select>
 
         </mat-form-field>
-     
+        <mat-form-field appearance="outline">
+          <mat-label>Enter password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password"(change)="matchError()">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
+
+        </mat-form-field>
+        <div class="form-field-spacer"></div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Confirm password</mat-label>
+          <input matInput [type]="hidee ? 'confirmPassword' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
+          <button mat-icon-button matSuffix (click)="hidee = !hidee" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hidee">
+            <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
+
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
+
+        </mat-form-field>
 
         <div class="dialog-footer">
           <button mat-raised-button color="primary" (click)="addEmployee()" [disabled]="!form.valid">Add</button>
