@@ -26,9 +26,9 @@ export class UsersService {
  
   }
 
-  updateUser(id: number,user: any): Observable<any> {
+  updateUser(user: any): Observable<any> {
 
-    return this.http.put('https://localhost:7088/api/Users/Update/'+id,user);
+    return this.http.put('https://localhost:7088/api/Users/Update/',user);
 
   }
 

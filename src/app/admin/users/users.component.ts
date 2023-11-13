@@ -15,7 +15,9 @@ export class UsersComponent implements OnInit {
   @ViewChild('callCreateDialog') callCreateDialog! :TemplateRef<any>
   @ViewChild('callDeleteDailog') callDelete!:TemplateRef<any>
   @ViewChild('callEditDailog') callEditDailog!:TemplateRef<any>
+  @ViewChild('callDetailDailog') callDetailDailog!:TemplateRef<any>
 
+  User: any;
   users: any[] = [];
   hide = true;
   hidee = true;
@@ -38,10 +40,8 @@ export class UsersComponent implements OnInit {
   });
 
   edit :FormGroup  = new FormGroup({
-    id: new FormControl('', [Validators.required]),
+    userid: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
-    email: new FormControl(''),
-    password: new FormControl('')
 
   });
 
@@ -65,23 +65,59 @@ export class UsersComponent implements OnInit {
 
   }
 
- 
   displayPassword(password: string): string {
     return '*'.repeat(password.length); 
   }
 
-  
-  openEditDailog(user: any) {
-    this.edit.setValue({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      password: user.password,
+    openEditDailog(user: any){
+      this.edit.setValue({
+        userid: user.userid,
+        username: user.username,
+     
+      });
     
-    });
-    this.dialog.open(this.callEditDailog);
-
-  }
+    const dialogRef= this.dialog.open(this.callEditDailog);
+    dialogRef.afterClosed().subscribe((result)=>{
+       if(result!=undefined)
+       {
+        if (result == 'yes') {
+          this.usersService.updateUser(this.edit.value).subscribe(
+            (response) => {
+              console.log( this.edit.value);
+      
+              console.log('User name updated successfully:', this.edit.value);
+              this.toastr.success('User updated successfully.', 'Success');
+              this.getUsers(); 
+      
+              this.dialog.closeAll();
+            
+            },
+            (error) => {
+              console.log( this.edit.value);
+      
+              console.log('Error while update user:', error);
+                this.toastr.error('Error while update user.', 'Error'); 
+      
+            }
+          );   
+        } else if (result == 'no') {
+          console.log("Thank you");
+        }
+        
+           
+       }
+ 
+    })
+   }
+ 
+  OpenDialogDetail(id:number){
+    
+    this.dialog.open(this.callDetailDailog);
+    this.usersService.getUser(id).subscribe( (User) => {
+        this.User = User;
+      
+      });  
+    }
 
   openDeleteDailog(id:number){
     console.log(id)
@@ -95,7 +131,9 @@ export class UsersComponent implements OnInit {
             () => {
               this.users = this.users.filter((user) => user.id !== id);
               console.log('User deleted successfully.');
-              this.dialog.closeAll();      
+              this.dialog.closeAll(); 
+              this.getUsers();
+     
             },
             (error) => {
               console.log('Error while deleting user:', error);

@@ -11,11 +11,7 @@
                   </ul>
                   <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
               </div>
-              <div class="col-lg-5 col-md-6 col-sm-12">                
-  <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
-        <mat-icon  class="icon">add</mat-icon>
-      </button>
-              </div>
+             
           </div>
       </div>
       <br>
@@ -43,6 +39,7 @@
                                       <td><span class="text-muted">{{ user.rolename }}</span></td>
 
                                       <td>
+                                        <a (click)="OpenDialogDetail(user.userid)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
                                         <a (click)="openEditDailog(user)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
                                         <a (click)="openDeleteDailog(user.userid)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
                                     </td>
@@ -117,3 +114,46 @@
       </form>
     </div>
   </ng-template>
+
+  <ng-template #callDeleteDailog>
+    <div style="padding:15px">
+<h2>Are you sure you want to delete this User?</h2>
+<button class="btn btn-primary m-1"   mat-dialog-close="yes">Yes</button>
+<button class="btn btn-danger m-1"  mat-dialog-close="no">No</button> 
+</div>
+</ng-template>  
+      
+
+<ng-template #callDetailDailog>
+  <div class="mat-dialog-container">
+  <div class="dialog-header">
+  <h2>User Detail</h2>
+  </div>
+  <div *ngIf="User">
+    <p><strong>User Name:</strong> {{ User.username }}</p>
+    <p><strong>Role Name:</strong> {{ User.rolename }}</p>
+
+
+  </div>
+  </div>
+  </ng-template>
+
+    
+  <ng-template #callEditDailog>
+    <div class="mat-dialog-container">
+    <div class="dialog-header">
+    <h2>Edit User</h2>
+    </div>
+    <form class="example-container" [formGroup]="edit">
+    <mat-form-field appearance="outline">
+    <mat-label>Enter User Name</mat-label>
+    <input matInput type="text" placeholder="Enter user name" formControlName="username">
+    <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
+    </mat-form-field>
+    
+    <div class="dialog-footer">
+    <button mat-raised-button color="primary"mat-dialog-close="yes">Edit</button>
+    </div>
+    </form>
+    </div>
+    </ng-template>
