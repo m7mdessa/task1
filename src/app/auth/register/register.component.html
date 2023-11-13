@@ -38,9 +38,9 @@
                     <div *ngIf="registerForm.get('username')?.errors?.['required'] as requiredError"class="text-danger">
                        user name is required
                   </div>  
-                  <div *ngIf="errorMessage" class="text-danger">
-                    {{ errorMessage }}
-                  </div>            
+                  <div *ngIf="registerForm.get('username')?.errors?.['usernameTaken']" class="text-danger">
+                    {{ usernameMessage }}
+                  </div>
                  </div>
                  <div class="input-group mb-3">
                   <input type="email" class="form-control" placeholder="Email"formControlName="email">
@@ -52,11 +52,11 @@
                 <div *ngIf="registerForm.get('email')?.errors?.['required'] as requiredError"class="text-danger">
                     email is required
               </div> 
-              <div *ngIf="errorMessage" class="text-danger">
-                {{ errorMessage }}
-              </div> 
+            
               <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">Invalid email format</mat-error>
-              
+              <div *ngIf="registerForm.get('email')?.errors?.['emailTaken']" class="text-danger">
+                {{ emailMessage }}
+              </div>
                  </div>
                  <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Phone"formControlName="phone">
@@ -111,8 +111,7 @@
                
               </div>
           </form>
-         
-           
+     
           </div>
         </div>
        

@@ -67,7 +67,7 @@
         <div class="list-group">
             <div class="list-group-item" *ngFor="let item of (employeesAndDepartments | filter: filterText)">
               <ng-container *ngIf="item.firstname">
-                <h5 class="list-group-item-heading"(click)="OpenEmployeeDetail(item.employeeid)">{{ item.firstname }} {{ item.lastname }}</h5>
+                <h5 class="list-group-item-heading"(click)="OpenEmployeeDetail(item.employeeid)">Employee: {{ item.firstname }} {{ item.lastname }}</h5>
               
               </ng-container>
           

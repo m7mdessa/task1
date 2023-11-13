@@ -24,11 +24,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
     BrowserAnimationsModule
 
   ],
-  providers: [{
-    provide:HTTP_INTERCEPTORS,
-    useClass:TokenInterceptor,
-    multi:true
-    }],
+  providers: [{ provide:HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true}],
 
   bootstrap: [AppComponent]
 })
