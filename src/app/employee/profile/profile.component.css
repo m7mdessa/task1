@@ -1,0 +1,11 @@
+.edit{
+    position: relative;
+    top: -90px;
+    right: 58px;
+    border-radius: 50px;
+}
+.rounded-circle {
+    border-radius: 50%!important;
+    width: 180px;
+    height: 180px;
+}

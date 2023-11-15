@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { UsersService } from 'src/app/service/users.service';
+import * as CryptoJS from 'crypto-js';
 
 import { ToastrService } from 'ngx-toastr'; 
 import { FormGroup, FormControl,Validators } from '@angular/forms';   
@@ -64,10 +65,11 @@ export class UsersComponent implements OnInit {
     });
 
   }
-
   displayPassword(password: string): string {
-    return '*'.repeat(password.length); 
+    const hashedPassword = CryptoJS.SHA256(password).toString();
+    return hashedPassword;
   }
+ 
 
     openEditDailog(user: any){
       this.edit.setValue({
@@ -110,6 +112,7 @@ export class UsersComponent implements OnInit {
     })
    }
  
+  
   OpenDialogDetail(id:number){
     
     this.dialog.open(this.callDetailDailog);
@@ -172,3 +175,7 @@ export class UsersComponent implements OnInit {
 
 
 }
+function hashPassword(password: any, string: any) {
+  throw new Error('Function not implemented.');
+}
+

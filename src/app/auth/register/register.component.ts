@@ -16,8 +16,8 @@ import { DepartmentService } from 'src/app/service/department.service';
 export class RegisterComponent implements OnInit{
   
   departments: any[] = [];
-  usernameMessage: string | undefined;
-  emailMessage: string | undefined;
+  usernameMessage: string ='';
+  emailMessage: string ='';
 
   constructor( private router: Router, private authService: AuthService,private departmentService: DepartmentService,private toastr: ToastrService) {}
   
@@ -44,72 +44,41 @@ export class RegisterComponent implements OnInit{
       this.registerForm.controls['repeatPassword'].setErrors({ misMatch: true });
     }
   }
-
-  register() {
-
+  async register() {
     const username = this.registerForm.get('username')?.value;
     const email = this.registerForm.get('email')?.value;
-
-  if(username){
-
   
-    this.authService.IsUsernameTaken(username).subscribe(
-      (resp: any) => {
-        this.authService.Register(this.registerForm.value).subscribe(
-          (registrationResp: any) => {
-            this.toastr.success('User Added successfully.', 'Success');
-            this.router.navigate(['auth/login']);
-            this.registerForm.reset();
-          },
-          (registrationErr) => {
-            console.error('Registration error:', registrationErr);
-            this.toastr.error('Registration failed. Please try again.', 'Error');
-          }
-        );
-      },
-      (usernameTakenErr) => {
-        this.registerForm.get('username')?.setErrors({ 'usernameTaken': true });
+    if (username && email) {
+      try {
 
-        this.usernameMessage ='username is already taken'
-        console.log(this.usernameMessage); 
-      // this.toastr.error('Username is already taken. Please choose another one.', 'Error');
-
-      }
-    );
-  }
-
-  if(email){
-
+        await Promise.all([
+          this.authService.IsUsernameTaken(username).toPromise(),
+          this.authService.IsEmailTaken(email).toPromise()
+        ]);
   
-    this.authService.IsEmailTaken(email).subscribe(
-      (resp: any) => {
-        this.authService.Register(this.registerForm.value).subscribe(
-          (registrationResp: any) => {
-            this.toastr.success('User Added successfully.', 'Success');
-            this.router.navigate(['auth/login']);
-            this.registerForm.reset();
-          },
-          (registrationErr) => {
-            console.error('Registration error:', registrationErr);
-            this.toastr.error('Registration failed. Please try again.', 'Error');
-          }
-        );
-      },
-      (emailTakenErr) => {
-        this.registerForm.get('email')?.setErrors({ 'emailTaken': true });
-
-        this.emailMessage ='email is already taken.'
-        console.log(this.emailMessage); 
-      // this.toastr.error('Username is already taken. Please choose another one.', 'Error');
-
+        await this.authService.Register(this.registerForm.value).toPromise();
+  
+        this.toastr.success('User Added successfully.', 'Success');
+        this.router.navigate(['auth/login']);
+        this.registerForm.reset();
+      } catch (errorResponse:any) {
+        console.error('Registration error:', errorResponse);
+  
+        if (errorResponse.error && errorResponse.error.usernameTaken) {
+          this.registerForm.get('username')?.setErrors({ 'usernameTaken': true });
+          this.usernameMessage = 'Username is already taken.';
+        }
+  
+        if (errorResponse.error && errorResponse.error.emailTaken) {
+          this.registerForm.get('email')?.setErrors({ 'emailTaken': true });
+          this.emailMessage = 'Email is already taken.';
+        }
+  
+        this.toastr.error('Registration failed. Please try again.', 'Error');
       }
-    );
+    }
   }
-
-
-
-
-  }
+  
   
   onSubmit() {
     if (this.registerForm.valid) {

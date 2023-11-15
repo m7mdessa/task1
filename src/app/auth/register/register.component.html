@@ -38,7 +38,7 @@
                     <div *ngIf="registerForm.get('username')?.errors?.['required'] as requiredError"class="text-danger">
                        user name is required
                   </div>  
-                  <div *ngIf="registerForm.get('username')?.errors?.['usernameTaken']" class="text-danger">
+                  <div *ngIf="registerForm.get('username')?.hasError?.('usernameTaken')" class="text-danger">
                     {{ usernameMessage }}
                   </div>
                  </div>
@@ -99,7 +99,7 @@
                    class="error-message"class="text-danger">Passwords do not match</div>
                    </div>
                
-                  <button (click)="register()"[disabled]="!registerForm.valid"class="btn btn-primary btn-block waves-effect waves-light"style="color:#fff">SIGN UP</button>                        
+                  <button   type="submit"   (click)="register()"[disabled]="!registerForm.valid"class="btn btn-primary btn-block waves-effect waves-light"style="color:#fff">SIGN UP</button>                        
                   
               </div>
               <div class="row mt-3">

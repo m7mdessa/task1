@@ -16,7 +16,7 @@ export class adminguardGuard implements CanActivate {
               const user:any  = localStorage.getItem('user');
               const userData = JSON.parse(user);
               
-              var roleId = userData.Role; 
+              var roleId = userData.RoleId; 
               console.log(user,"user");
               console.log(roleId,"roleId");
       

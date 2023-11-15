@@ -38,6 +38,15 @@ export class ProfileComponent implements OnInit {
 
    });
 
+   imageForm : FormGroup = new FormGroup({
+    
+    employeeid: new FormControl(),
+    image: new FormControl(),
+
+
+
+   });
+
 
  matchError() {
     if (this.updateForm.controls['password'].value === this.updateForm.controls['confirmPassword'].value) {
@@ -100,12 +109,21 @@ export class ProfileComponent implements OnInit {
 
     });
   }
-  openEditDailog() {
+  openEditImageDailog() {
   
     this.dialog.open(this.callEditDailog);
 
   }
-  
+  UploadImage(file:any)
+  {
+  if(file.length==0)
+  return ; 
+  let fileToUpload=<File>file[0];
+  const formDate=new FormData();
+  formDate.append('file',fileToUpload,fileToUpload.name);
+  this.employee.uploadAttachment(formDate);
+  }
+   
  
 
 

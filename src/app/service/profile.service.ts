@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfileService {
+  upload_Image: any;
 
   constructor(private http: HttpClient) { }
 
@@ -25,5 +26,14 @@ export class ProfileService {
 
     return this.http.put('https://localhost:7088/api/Profile/UpdateEmployee/', employee);
 
+  }
+
+  uploadAttachment(file:FormData){
+    this.http.post('https://localhost:7091/api/Profile/uploadImage' ,file).subscribe((resp:any)=>{
+    this.upload_Image = resp.image; 
+    },err=>{
+      console.log('Something went wrong !!');
+    })
+  
   }
 }

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
 import { ToastrService } from 'ngx-toastr';
@@ -51,10 +51,10 @@ export class AuthService {
  
       localStorage.setItem('user', JSON.stringify(data));
   
-      if (data.Role == "1") {
+      if (data.RoleId == "1") {
         this.toastr.success('Welcome On Admin Dashboard');
         this.router.navigate(['admin']);
-      } else if (data.Role == "2") {
+      } else if (data.RoleId == "2") {
         this.toastr.success('Welcome On Employee Profile');
         this.router.navigate(['employee/Profile']);
       } else {
@@ -78,18 +78,30 @@ export class AuthService {
  
   }
 
-  IsUsernameTaken(username: string): Observable<boolean> {
+ IsUsernameTaken(username: string): Observable<boolean> {
     
     return this.http.get<boolean>('https://localhost:7088/api/Auth/checkUsername/'+username);
 
   }
 
 
-  IsEmailTaken(email: string): Observable<boolean> {
+ IsEmailTaken(email: string): Observable<boolean> {
     
-    return this.http.get<boolean>('https://localhost:7088/api/Auth/checkEmail/'+email);
+   return this.http.get<boolean>('https://localhost:7088/api/Auth/checkEmail/'+email);
 
-  }
 }
 
+  isUsernameOrEmailTaken(username: string, email: string): Observable<{ usernameTaken: boolean, emailTaken: boolean }> {
+
+    return forkJoin([
+      this.http.get<boolean>('https://localhost:7088/api/Auth/checkUsername/'+username),
+      this.http.get<boolean>('https://localhost:7088/api/Auth/checkEmail/'+email)
+    ]).pipe(
+      map(([usernameTaken, emailTaken]) => ({
+        usernameTaken: usernameTaken,
+        emailTaken: emailTaken
+      }))
+    );
+  }
+}
 
