@@ -1,4 +1,5 @@
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,6 +19,9 @@ export class RegisterComponent implements OnInit{
   departments: any[] = [];
   usernameMessage: string ='';
   emailMessage: string ='';
+  usernameAlreadyExists: boolean = false;
+  emailAlreadyExists: boolean = false;
+  registerSuccess: boolean = false;
 
   constructor( private router: Router, private authService: AuthService,private departmentService: DepartmentService,private toastr: ToastrService) {}
   
@@ -44,41 +48,41 @@ export class RegisterComponent implements OnInit{
       this.registerForm.controls['repeatPassword'].setErrors({ misMatch: true });
     }
   }
-  async register() {
-    const username = this.registerForm.get('username')?.value;
-    const email = this.registerForm.get('email')?.value;
   
-    if (username && email) {
-      try {
-
-        await Promise.all([
-          this.authService.IsUsernameTaken(username).toPromise(),
-          this.authService.IsEmailTaken(email).toPromise()
-        ]);
+  register(): void {
+    //this.showValidations = true;
+   // this.registerSuccess = false;
+    this.usernameAlreadyExists = false;
+    this.emailAlreadyExists = false;
+//debugger;
   
-        await this.authService.Register(this.registerForm.value).toPromise();
-  
+    this.authService.Register(this.registerForm.value).subscribe(
+      
+      (res: any) => {
+        //debugger;
         this.toastr.success('User Added successfully.', 'Success');
         this.router.navigate(['auth/login']);
-        this.registerForm.reset();
-      } catch (errorResponse:any) {
-        console.error('Registration error:', errorResponse);
+          this.registerForm.reset();
   
-        if (errorResponse.error && errorResponse.error.usernameTaken) {
-          this.registerForm.get('username')?.setErrors({ 'usernameTaken': true });
-          this.usernameMessage = 'Username is already taken.';
+      },
+      (error: HttpErrorResponse) => {
+      //  debugger;
+        this.registerSuccess = false;
+        console.log(error);
+
+        if (error.error && error.error.error) {
+          if (error.error.error === 'username already exists') {
+            this.usernameAlreadyExists = true;
+          }
+          if (error.error.error === 'email already exists') {
+            this.emailAlreadyExists = true;
+          }
+        } else {
+          console.log(error);
         }
-  
-        if (errorResponse.error && errorResponse.error.emailTaken) {
-          this.registerForm.get('email')?.setErrors({ 'emailTaken': true });
-          this.emailMessage = 'Email is already taken.';
-        }
-  
-        this.toastr.error('Registration failed. Please try again.', 'Error');
       }
-    }
+    );
   }
-  
   
   onSubmit() {
     if (this.registerForm.valid) {

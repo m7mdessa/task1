@@ -14,9 +14,9 @@
                   <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
               </div>
               <div class="col-lg-5 col-md-6 col-sm-12">                
-  <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
-        <mat-icon  class="icon">add</mat-icon>
-      </button>
+               <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
+               <mat-icon  class="icon">add</mat-icon>
+               </button>
               </div>
           </div>
       </div>
@@ -30,18 +30,21 @@
                           <table class="table table-hover product_item_list">
                               <thead>
                                   <tr>
+                                      <th>Image</th>
                                       <th>First Name</th>
                                       <th>Last Name</th>
                                       <th data-breakpoints="sm xs">Email</th>
                                       <th data-breakpoints="sm xs">Phone</th>
                                       <th data-breakpoints="xs">Salary</th>
                                       <th data-breakpoints="xs md">Department</th>
+                                      <th data-breakpoints="xs md">Hire Date</th>
+
                                       <th data-breakpoints="sm xs md">Action</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   <tr *ngFor="let employee of Employees">
-
+                                      <td><img src="assets/img/{{employee.image}}"  width="48" alt="profile-image"></td>
                                       <td><span class="text-muted">{{ employee.firstname }}</span></td>
                                       <td><span class="text-muted">{{ employee.lastname }}</span></td>
                                       <td><span class="text-muted">{{ employee.email }}</span></td>
@@ -49,6 +52,7 @@
 
                                       <td>${{ employee.salary }}</td>
                                       <td><span class="col-green">{{employee.departmentname }}</span></td>
+                                      <td><span class="col-green">{{ employee.hireDate | date: 'mediumDate' }}</span></td>
                                       <td>
                                         <a (click)="OpenDialogDetail(employee.employeeid)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
                                         <a (click)="openEditDailog(employee)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
@@ -108,6 +112,7 @@
     <p><strong>Phone:</strong> {{ Employee.phone }}</p>
     <p><strong>Department:</strong> {{ Employee.departmentname }}</p>
     <p><strong>Salary:</strong> {{ Employee.salary }}</p>
+    <p><strong>Hire Date:</strong> {{ Employee.hireDate | date: 'mediumDate' }}</p>
 
   </div>
   </div>

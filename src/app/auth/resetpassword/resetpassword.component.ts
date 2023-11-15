@@ -57,7 +57,7 @@ export class ResetpasswordComponent implements OnInit{
    
       
     })
-
+   
     resetForm :FormGroup = new FormGroup({
       verificationcode:new FormControl( ''),
       newpassword:new FormControl( '', [Validators.required, Validators.minLength(8), ]),

@@ -20,6 +20,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FilterPipe } from '../Pipes/filter.pipe';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -27,7 +28,6 @@ import { FilterPipe } from '../Pipes/filter.pipe';
   declarations: [
     NavbarComponent,
     FilterPipe
-
   ],
   imports: [
     CommonModule,
@@ -49,7 +49,7 @@ import { FilterPipe } from '../Pipes/filter.pipe';
      MatToolbarModule,
      MatDatepickerModule,
      MatNativeDateModule,
-     
+     DatePipe
   ],
   exports:[
     MatCardModule,
@@ -70,7 +70,8 @@ import { FilterPipe } from '../Pipes/filter.pipe';
    MatDatepickerModule,
    MatNativeDateModule,
    NavbarComponent,
-   FilterPipe
+   FilterPipe,
+   DatePipe
   ]
 })
 export class SharedModule { }

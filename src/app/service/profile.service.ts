@@ -28,8 +28,15 @@ export class ProfileService {
 
   }
 
+  UpdateImage(employee: any): Observable<any> {
+    employee.image = this.upload_Image;
+
+    return this.http.put('https://localhost:7088/api/Profile/UpdateImage/', employee);
+
+  }
+
   uploadAttachment(file:FormData){
-    this.http.post('https://localhost:7091/api/Profile/uploadImage' ,file).subscribe((resp:any)=>{
+    this.http.post('https://localhost:7088/api/Profile/uploadImage' ,file).subscribe((resp:any)=>{
     this.upload_Image = resp.image; 
     },err=>{
       console.log('Something went wrong !!');

@@ -11,16 +11,17 @@
       
         <div class="container-fluid">
             <div class="row clearfix">
-                <div class="col-lg-4 col-md-12"*ngFor="let profile of profile">
-                    <div class="card mcard_3">
+            <div class="col-lg-4 col-md-12"*ngFor="let profile of profile">
 
+                <div class="card mcard_3">
                         <div class="body">
                             <a><img src="assets/img/{{profile.image}}" class="rounded-circle shadow " alt="profile-image"></a>
                             <h4 class="m-t-10">{{profile.username }}</h4>                            
-                            <a (click)="openEditImageDailog()"class="btn btn-info btn-icon edit"><i class="zmdi zmdi-edit"></i></a>
+                            <a class="btn btn-info btn-icon edit"(click)="openEditImageDailog(profile)"><i class="zmdi zmdi-edit"></i></a>
 
                         </div>
-                    </div>
+                </div> 
+                  
                     <div class="card">
                         <div class="body">
                             <small class="text-muted"> Department: </small>
@@ -44,7 +45,8 @@
                         
                         </div>
                     </div>                    
-                </div>
+            </div>
+          
                 <div class="col-lg-8 col-md-12">
                     <div class="card">
                         <div class="header">
@@ -99,6 +101,7 @@
                         </div>
                     </div>
                 </div>
+         
             </div>
         </div>
     </div>
@@ -107,21 +110,19 @@
 <ng-template #callEditDailog>
     <div class="mat-dialog-container">
     <div class="dialog-header">
-    <h2>Edit Profile</h2>
+    <h2>Edit Image Profile</h2>
     </div>
     <form class="example-container" [formGroup]="imageForm">
-       
     
-    <div class="form-field-spacer"></div>
     <div>
     <label for="name">Image:</label>
     
           <input type="file"  formControlName="image"    #file   (change)="UploadImage(file.files)">
-          <mat-error *ngIf="updateForm.get('image')?.hasError('required')">Image is required</mat-error>
+          <mat-error *ngIf="imageForm.get('image')?.hasError('required')">Image is required</mat-error>
     
     </div>
     <div class="dialog-footer">
-    <button mat-raised-button color="primary" (click)="updateEmployee()" >Save</button>
+    <button mat-raised-button color="primary" mat-dialog-close="yes" >Save</button>
     </div>
     </form>
     </div>

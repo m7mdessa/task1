@@ -11,8 +11,14 @@
             <div class="text-center text-muted mb-4">
               <h3> SING UP </h3>
             </div>
+            <div *ngIf="usernameAlreadyExists" class="text-danger">
+              username already exists
+            </div>
+            <div *ngIf="emailAlreadyExists" class="text-danger">
+              email already exists
+            </div>
             <form class="card auth_form"[formGroup]="registerForm">
-              
+            
               <div class="body">
                   <div class="input-group mb-3">
                       <input type="text" class="form-control" placeholder="First Name"formControlName="firstname"></div>
@@ -38,9 +44,7 @@
                     <div *ngIf="registerForm.get('username')?.errors?.['required'] as requiredError"class="text-danger">
                        user name is required
                   </div>  
-                  <div *ngIf="registerForm.get('username')?.hasError?.('usernameTaken')" class="text-danger">
-                    {{ usernameMessage }}
-                  </div>
+                 
                  </div>
                  <div class="input-group mb-3">
                   <input type="email" class="form-control" placeholder="Email"formControlName="email">
@@ -54,8 +58,8 @@
               </div> 
             
               <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">Invalid email format</mat-error>
-              <div *ngIf="registerForm.get('email')?.errors?.['emailTaken']" class="text-danger">
-                {{ emailMessage }}
+              <div *ngIf="emailAlreadyExists" class="text-danger">
+                email already exists
               </div>
                  </div>
                  <div class="input-group mb-3">
@@ -111,7 +115,7 @@
                
               </div>
           </form>
-     
+         
           </div>
         </div>
        

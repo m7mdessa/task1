@@ -39,12 +39,8 @@ export class ProfileComponent implements OnInit {
    });
 
    imageForm : FormGroup = new FormGroup({
-    
     employeeid: new FormControl(),
     image: new FormControl(),
-
-
-
    });
 
 
@@ -55,6 +51,8 @@ export class ProfileComponent implements OnInit {
       this.updateForm.controls['confirmPassword'].setErrors({ misMatch: true });
     }
   }
+
+ 
 
 
    
@@ -109,11 +107,49 @@ export class ProfileComponent implements OnInit {
 
     });
   }
-  openEditImageDailog() {
   
-    this.dialog.open(this.callEditDailog);
+  openEditImageDailog(profile: any){
+    this.imageForm.setValue({
+      employeeid: profile.employeeid,
+     image: profile.image,
+   
+    });
+  
+  const dialogRef= this.dialog.open(this.callEditDailog);
+  dialogRef.afterClosed().subscribe((result)=>{
+     if(result!=undefined)
+     {
+      if (result == 'yes') {
+       // this.updateForm.get('employeeid')?.setValue(employeeId);
+    this.employee.UpdateImage(this.imageForm.value).subscribe(
+      (responsee) => {
+        console.log( this.imageForm.value);
 
-  }
+        console.log('Image updated successfully:', responsee);
+        this.toastr.success('Image updated successfully.', 'Success');
+         this.imageForm.reset();
+         this.getProfile();      
+ 
+      
+      },
+      (error) => {
+        console.log( this.imageForm.value);
+
+        console.log('Error while update Image :', error);
+          this.toastr.error('Error while update Image .', 'Error'); 
+
+      }
+    ); 
+      } else if (result == 'no') {
+        console.log("Thank you");
+      }
+      
+         
+     }
+
+  })
+ }
+ 
   UploadImage(file:any)
   {
   if(file.length==0)
