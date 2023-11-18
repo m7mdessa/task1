@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
   department: any;
 
   employeesAndDepartments: any[] = [];
-
+  foundResults : string ='';
   filterText:string='';
   constructor( private employeeService: EmployeeService,private departmentService: DepartmentService,private router: Router,private dialog:MatDialog) {}
 

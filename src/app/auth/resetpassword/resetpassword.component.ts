@@ -59,8 +59,8 @@ export class ResetpasswordComponent implements OnInit{
     })
    
     resetForm :FormGroup = new FormGroup({
-      verificationcode:new FormControl( ''),
-      newpassword:new FormControl( '', [Validators.required, Validators.minLength(8), ]),
+      verificationCode:new FormControl( ''),
+      newPassword:new FormControl( '', [Validators.required, Validators.minLength(8), ]),
       repeatPassword: new FormControl('', [Validators.required, Validators.minLength(8) ]),
       
     })
@@ -82,7 +82,7 @@ export class ResetpasswordComponent implements OnInit{
     }
     onCodeInput(position: number, event: Event) {
       const concatenatedValue = this.getConcatenatedVerificationCode();
-      this.resetForm.get('verificationcode')?.setValue(concatenatedValue);
+      this.resetForm.get('verificationCode')?.setValue(concatenatedValue);
       const target = event.target as HTMLInputElement;
       const currentInputValue = target.value;
     

@@ -47,14 +47,14 @@ export class DepartmentsComponent implements OnInit {
       this.employeesAndDepartments = [...this.Employees, ...this.departments];
     }
     form :FormGroup = new FormGroup({
-      departmentname: new FormControl('',[Validators.required]),
-      departmentlocation: new FormControl('',[Validators.required])
+      departmentName: new FormControl('',[Validators.required]),
+      departmentLocation: new FormControl('',[Validators.required])
     });
     
     edit :FormGroup = new FormGroup({
-      departmentid: new FormControl(''),
-      departmentname: new FormControl('',[Validators.required]),
-      departmentlocation: new FormControl('',[Validators.required])
+      departmentId: new FormControl(''),
+      departmentName: new FormControl('',[Validators.required]),
+      departmentLocation: new FormControl('',[Validators.required])
 
     });
 
@@ -75,9 +75,9 @@ OpenDialogAdd(){
 
   openEditDailog(department: any){
     this.edit.setValue({
-      departmentid: department.departmentid,
-      departmentname: department.departmentname,
-      departmentlocation: department.departmentlocation,
+      departmentId: department.departmentId,
+      departmentName: department.departmentName,
+      departmentLocation: department.departmentLocation,
     
     });
     const dialogRef= this.dialog.open(this.callEditDailog);

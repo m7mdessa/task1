@@ -23,6 +23,9 @@ export class EmployeesComponent implements OnInit {
   hide = true;
   hidee = true;
   departments: any[] = [];
+  usernameAlreadyExists: boolean = false;
+  emailAlreadyExists: boolean = false;
+  isLinear = false;
 
   constructor( private employeeService: EmployeeService,private departmentService: DepartmentService, private toastr: ToastrService,private dialog:MatDialog) {}
 
@@ -34,24 +37,24 @@ export class EmployeesComponent implements OnInit {
   }
 
   form :FormGroup = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
     salary: new FormControl('', [Validators.required]),
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
-    departmentid: new FormControl('', [Validators.required]),
+    departmentId: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
   edit :FormGroup  = new FormGroup({
-    employeeid: new FormControl('', [Validators.required]),
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
+    employeeId: new FormControl('', [Validators.required]),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
     salary: new FormControl('', [Validators.required]),
     email: new FormControl(''),
-    departmentid: new FormControl('', [Validators.required]),
+    departmentId: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
 
   });
@@ -97,12 +100,12 @@ export class EmployeesComponent implements OnInit {
    
   openEditDailog(employee: any){
     this.edit.setValue({
-      employeeid: employee.employeeid,
-      firstname: employee.firstname,
-      lastname: employee.lastname,
+      employeeId: employee.employeeId,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
       salary: employee.salary,
       email: employee.email,
-      departmentid: employee.departmentid,
+      departmentId: employee.departmentId,
       phone: employee.phone,
    
 
@@ -188,6 +191,16 @@ export class EmployeesComponent implements OnInit {
     
             console.log('Error while add employee:', error);
               this.toastr.error('Error while add employee.', 'Error'); 
+              if (error.error && error.error.error) {
+                if (error.error.error === 'username already exists') {
+                  this.usernameAlreadyExists = true;
+                }
+                if (error.error.error === 'email already exists') {
+                  this.emailAlreadyExists = true;
+                }
+              } else {
+                console.log(error);
+              }
     
           });
           

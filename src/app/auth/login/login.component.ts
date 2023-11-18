@@ -17,14 +17,14 @@ errorMessage: string | undefined;
   }
  
 
-  username = new FormControl('', [Validators.required]);
+  userName = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required, Validators.minLength(8)]);
  
 
   loginError: string | null = null; 
 
   login() {
-    this.auth.Login(this.username, this.password)
+    this.auth.Login(this.userName, this.password)
     this.errorMessage = 'Invalid username or password';
   }
 

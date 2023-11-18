@@ -29,25 +29,25 @@
               <div class="col-lg-12">
                   <div class="card">
                       <div class="table-responsive">
-                          <table class="table table-hover product_item_list">
-                              <thead>
+                        <table class="table table-hover product_item_list c_table theme-color mb-0">
+                          <thead>
                                   <tr>
-                                      <th>Department Name</th>
-                                      <th>Department Location</th>
-                                      <th data-breakpoints="sm xs md">Action</th>
+                                      <th style="color: #555;">Department Name</th>
+                                      <th style="color: #555;">Department Location</th>
+                                      <th  style="color: #555;" data-breakpoints="sm xs md">Action</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   <tr *ngFor="let department of departments">
                                     
-                                      <td><span class="text-muted">{{ department.departmentname }}</span></td>
+                                      <td><span class="text-muted">{{ department.departmentName }}</span></td>
 
-                                      <td><span class="text-muted">{{ department.departmentlocation }}</span></td>
+                                      <td><span class="text-muted">{{ department.departmentLocation }}</span></td>
 
                                       <td>
-                                        <a (click)="OpenDialogDetail(department.departmentid)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
+                                        <a (click)="OpenDialogDetail(department.departmentId)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
                                         <a (click)="openEditDailog(department)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
-                                        <a (click)="openDeleteDailog(department.departmentid)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
+                                        <a (click)="openDeleteDailog(department.departmentId)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
                                     </td>
                                   
                                   </tr>
@@ -76,16 +76,16 @@
 
         <mat-form-field appearance="outline">
             <mat-label>Enter Department Name</mat-label>
-            <textarea matInput type="text" placeholder="Enter Department Name" formControlName="departmentname"></textarea>
-            <mat-error *ngIf="edit.get('departmentname')?.hasError('required')">department name is required</mat-error>
+            <textarea matInput type="text" placeholder="Enter Department Name" formControlName="departmentName"></textarea>
+            <mat-error *ngIf="edit.get('departmentName')?.hasError('required')">department name is required</mat-error>
             </mat-form-field>
             
             <div class="form-field-spacer"></div>
             
             <mat-form-field appearance="outline">
                 <mat-label>Enter Department Location</mat-label>
-                <textarea matInput type="text" placeholder="Enter Department Location" formControlName="departmentlocation"></textarea>
-                <mat-error *ngIf="edit.get('departmentlocation')?.hasError('required')">department location is required</mat-error>
+                <textarea matInput type="text" placeholder="Enter Department Location" formControlName="departmentLocation"></textarea>
+                <mat-error *ngIf="edit.get('departmentLocation')?.hasError('required')">department location is required</mat-error>
             </mat-form-field>
          
 
@@ -115,8 +115,8 @@
   
 
   <div *ngIf="department">
-    <p><strong>Department Name:</strong> {{ department.departmentname }}</p>
-    <p><strong>Department Location:</strong> {{ department.departmentlocation }}</p>
+    <p><strong>Department Name:</strong> {{ department.departmentName }}</p>
+    <p><strong>Department Location:</strong> {{ department.departmentLocation }}</p>
   
   </div>
   </div>
@@ -131,16 +131,16 @@
 
 <mat-form-field appearance="outline">
 <mat-label>Enter Department Name</mat-label>
-<textarea matInput type="text" placeholder="Enter Department Name" formControlName="departmentname"></textarea>
-<mat-error *ngIf="edit.get('departmentname')?.hasError('required')">department name is required</mat-error>
+<textarea matInput type="text" placeholder="Enter Department Name" formControlName="departmentName"></textarea>
+<mat-error *ngIf="edit.get('departmentName')?.hasError('required')">department name is required</mat-error>
 </mat-form-field>
 
 <div class="form-field-spacer"></div>
 
 <mat-form-field appearance="outline">
     <mat-label>Enter Department Location</mat-label>
-    <textarea matInput type="text" placeholder="Enter Department Location" formControlName="departmentlocation"></textarea>
-    <mat-error *ngIf="edit.get('departmentlocation')?.hasError('required')">department location is required</mat-error>
+    <textarea matInput type="text" placeholder="Enter Department Location" formControlName="departmentLocation"></textarea>
+    <mat-error *ngIf="edit.get('departmentLocation')?.hasError('required')">department location is required</mat-error>
 </mat-form-field>
 
 <div class="dialog-footer">

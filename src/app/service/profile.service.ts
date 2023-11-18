@@ -22,12 +22,19 @@ export class ProfileService {
     return this.http.get<any>('https://localhost:7088/api/Profile/GetProfileEmployee/'+id);
   }
 
-  UpdateEmployee(employee: any): Observable<any> {
+  UpdateEmployeeInfo(employee: any): Observable<any> {
 
-    return this.http.put('https://localhost:7088/api/Profile/UpdateEmployee/', employee);
+    return this.http.put('https://localhost:7088/api/Profile/UpdateEmployeeInfo/', employee);
 
   }
 
+  UpdateEmployeePassword(employee: any): Observable<any> {
+
+    return this.http.put('https://localhost:7088/api/Profile/UpdateEmployeePassword/', employee);
+
+  }
+
+  
   UpdateImage(employee: any): Observable<any> {
     employee.image = this.upload_Image;
 

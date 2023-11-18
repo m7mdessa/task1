@@ -27,9 +27,9 @@ export class ProfileComponent implements OnInit {
 
   updateForm : FormGroup = new FormGroup({
     
-    userid: new FormControl(),
+    userId: new FormControl(),
    // image: new FormControl([Validators.required]),
-    username: new FormControl('', Validators.required),
+    userName: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
 

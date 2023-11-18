@@ -3,8 +3,6 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'src/app/service/admin.service';
-import { EmployeeService } from 'src/app/service/employee.service';
 import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
@@ -14,7 +12,6 @@ import { ProfileService } from 'src/app/service/profile.service';
 })
 
 export class ProfileComponent implements OnInit {
-  @ViewChild('callEditDailog') callEditDailog!:TemplateRef<any>
 
   profile: any[] = [];
 
@@ -27,11 +24,20 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  updateForm : FormGroup = new FormGroup({
+  infoForm : FormGroup = new FormGroup({
     
-    employeeid: new FormControl(),
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
+    employeeId: new FormControl(),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+
+
+   });
+
+   passwordForm : FormGroup = new FormGroup({
+    
+    employeeId: new FormControl(),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
 
@@ -39,24 +45,22 @@ export class ProfileComponent implements OnInit {
    });
 
    imageForm : FormGroup = new FormGroup({
-    employeeid: new FormControl(),
-    image: new FormControl(),
+    employeeId: new FormControl(),
+    image: new FormControl('', [Validators.required]),
    });
 
 
  matchError() {
-    if (this.updateForm.controls['password'].value === this.updateForm.controls['confirmPassword'].value) {
-      this.updateForm.controls['confirmPassword'].setErrors(null);
+    if (this.passwordForm.controls['password'].value === this.passwordForm.controls['confirmPassword'].value) {
+      this.passwordForm.controls['confirmPassword'].setErrors(null);
     } else {
-      this.updateForm.controls['confirmPassword'].setErrors({ misMatch: true });
+      this.passwordForm.controls['confirmPassword'].setErrors({ misMatch: true });
     }
   }
 
  
 
-
-   
-  updateEmployee() {
+  UpdateEmployeePassword(){
     
     const employee = localStorage.getItem('user');
     if (employee !== null) {
@@ -68,20 +72,89 @@ export class ProfileComponent implements OnInit {
     } else {
       console.log('No user data found in local storage.');
     }
-    this.updateForm.get('employeeid')?.setValue(employeeId);
-    this.employee.UpdateEmployee(this.updateForm.value).subscribe(
+    
+    this.passwordForm.get('employeeId')?.setValue(employeeId);
+    this.employee.UpdateEmployeePassword(this.passwordForm.value).subscribe(
       (responsee) => {
-        console.log( this.updateForm.value);
+        console.log( this.passwordForm.value);
 
         console.log('User updated successfully:', responsee);
         this.toastr.success('User updated successfully.', 'Success');
-         this.updateForm.reset();
+         this.passwordForm.reset();
          this.getProfile();      
  
       
       },
       (error) => {
-        console.log( this.updateForm.value);
+        console.log( this.passwordForm.value);
+
+        console.log('Error while update User :', error);
+          this.toastr.error('Error while update User .', 'Error'); 
+
+      }
+    );
+  }
+  UpdateImage() {
+    
+    const employee = localStorage.getItem('user');
+    if (employee !== null) {
+
+      const employeeData = JSON.parse(employee);
+    
+      var employeeId = employeeData.EmployeeId;
+    
+    } else {
+      console.log('No user data found in local storage.');
+    }
+    
+    this.imageForm.get('employeeId')?.setValue(employeeId);
+    this.employee.UpdateImage(this.imageForm.value).subscribe(
+      (responsee) => {
+        console.log( this.imageForm.value);
+
+        console.log('Image updated successfully:', responsee);
+        this.toastr.success('Image updated successfully.', 'Success');
+         this.imageForm.reset();
+         this.getProfile();      
+ 
+      
+      },
+      (error) => {
+        console.log( this.imageForm.value);
+
+        console.log('Error while update Image :', error);
+          this.toastr.error('Error while update Image .', 'Error'); 
+
+      }
+    ); 
+  }
+  UpdateEmployeeInfo() {
+    
+    const employee = localStorage.getItem('user');
+    if (employee !== null) {
+
+      const employeeData = JSON.parse(employee);
+    
+      var employeeId = employeeData.EmployeeId;
+    
+    } else {
+      console.log('No user data found in local storage.');
+    }
+    
+    this.infoForm.get('employeeId')?.setValue(employeeId);
+    this.employee.UpdateEmployeeInfo(this.infoForm.value).subscribe(
+      (responsee) => {
+        console.log( this.infoForm.value);
+
+        console.log('User updated successfully:', responsee);
+        this.toastr.success('User updated successfully.', 'Success');
+         this.infoForm.reset();
+         this.getProfile();      
+ 
+      
+      },
+      (error) => {
+        console.log( this.infoForm.value);
 
         console.log('Error while update User :', error);
           this.toastr.error('Error while update User .', 'Error'); 
@@ -108,47 +181,6 @@ export class ProfileComponent implements OnInit {
     });
   }
   
-  openEditImageDailog(profile: any){
-    this.imageForm.setValue({
-      employeeid: profile.employeeid,
-     image: profile.image,
-   
-    });
-  
-  const dialogRef= this.dialog.open(this.callEditDailog);
-  dialogRef.afterClosed().subscribe((result)=>{
-     if(result!=undefined)
-     {
-      if (result == 'yes') {
-       // this.updateForm.get('employeeid')?.setValue(employeeId);
-    this.employee.UpdateImage(this.imageForm.value).subscribe(
-      (responsee) => {
-        console.log( this.imageForm.value);
-
-        console.log('Image updated successfully:', responsee);
-        this.toastr.success('Image updated successfully.', 'Success');
-         this.imageForm.reset();
-         this.getProfile();      
- 
-      
-      },
-      (error) => {
-        console.log( this.imageForm.value);
-
-        console.log('Error while update Image :', error);
-          this.toastr.error('Error while update Image .', 'Error'); 
-
-      }
-    ); 
-      } else if (result == 'no') {
-        console.log("Thank you");
-      }
-      
-         
-     }
-
-  })
- }
  
   UploadImage(file:any)
   {

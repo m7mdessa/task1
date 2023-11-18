@@ -5,39 +5,48 @@
 <br>
 <br>
 
-
 <section class="content">
     <div class="body_scroll">
       
         <div class="container-fluid">
-            <div class="row clearfix">
+            <div class="row ">
             <div class="col-lg-4 col-md-12"*ngFor="let profile of profile">
 
                 <div class="card mcard_3">
                         <div class="body">
                             <a><img src="assets/img/{{profile.image}}" class="rounded-circle shadow " alt="profile-image"></a>
-                            <h4 class="m-t-10">{{profile.username }}</h4>                            
-                            <a class="btn btn-info btn-icon edit"(click)="openEditImageDailog(profile)"><i class="zmdi zmdi-edit"></i></a>
+                            <h4 class="m-t-10">{{profile.userName }}</h4> 
+                            <div class="col-12">
+                                <button class="btn btn-info"(click)="UpdateImage()" [disabled]="!imageForm.valid" >Save Changes</button>
+                            </div> 
+                            <form  [formGroup]="imageForm">
+    
+                               <div class="avatar-edit">
+                                 <input type='file' id="imageUpload"formControlName="image"   #file   (change)="UploadImage(file.files)" accept=".png, .jpg, .jpeg" />
+                                  <label for="imageUpload"class="btn btn-info btn-icon edit"><i class="zmdi zmdi-edit"></i></label>
+                               </div>
 
+                            </form>
+                           
                         </div>
                 </div> 
                   
                     <div class="card">
                         <div class="body">
                             <small class="text-muted"> Department: </small>
-                            <p>{{profile.departmentname }}</p>
+                            <p>{{profile.departmentName }}</p>
                             <hr>
                             <small class="text-muted">Email address: </small>
                             <p>{{profile.email }}</p>
                             <hr>
                             <small class="text-muted">User name: </small>
-                            <p>{{profile.username }}</p>
+                            <p>{{profile.userName }}</p>
                             <hr>
                             <small class="text-muted">First name: </small>
-                            <p>{{profile.firstname }}</p>
+                            <p>{{profile.firstName }}</p>
                             <hr>
                             <small class="text-muted">Last name: </small>
-                            <p>{{profile.lastname }}</p>
+                            <p>{{profile.lastName }}</p>
                             <hr>
                             <small class="text-muted">Phone: </small>
                             <p>{{profile.phone}}</p>
@@ -47,83 +56,80 @@
                     </div>                    
             </div>
           
-                <div class="col-lg-8 col-md-12">
+                <div class="col-lg-4 col-md-12">
                     <div class="card">
-                        <div class="header">
-                            <h2><strong>Employee</strong> Info</h2>
-                        </div>
+                      
                         <div class="body">
-
+                          
                             <div class="row">
                                
-                                <form [formGroup]="updateForm">
+                                <form [formGroup]="infoForm">
 
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-12">
+                                    <div class="row infoForm">
+                                        <div class="col-lg-7 col-md-12">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="first name"formControlName="firstname">
+                                                <input type="text" class="form-control" placeholder="first name"formControlName="firstName">
         
                                             </div>
-                                            <mat-error *ngIf="updateForm.get('firstname')?.hasError('required')">first name is required</mat-error>
+                                            <mat-error *ngIf="infoForm.get('firstName')?.hasError('required')">first name is required</mat-error>
 
                                         </div>
 
-                                        <div class="col-lg-4 col-md-12">
+                                        <div class="col-lg-7 col-md-12">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="last name"formControlName="lastname">
+                                                <input type="text" class="form-control"  placeholder="last name"formControlName="lastName">
         
                                             </div>
-                                            <mat-error *ngIf="updateForm.get('lastname')?.hasError('required')">last name is required</mat-error>
+                                            <mat-error *ngIf="infoForm.get('lastName')?.hasError('required')">last name is required</mat-error>
 
                                         </div>
-                                        <div class="col-lg-4 col-md-12">
-                                            <div class="form-group">
-                                                <input type="password" class="form-control"formControlName="password"(change)="matchError()"  placeholder="Current Password">
-                                            </div>
-                                            <mat-error *ngIf="updateForm.get('password')?.hasError('required')">Password is required</mat-error>
-                                            <mat-error *ngIf="updateForm.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
-                                        </div>
-                                        <div class="col-lg-4 col-md-12">
-                                            <div class="form-group">
-                                                <input type="password" class="form-control"formControlName="confirmPassword"(change)="matchError()" placeholder="New Password">
-                                            </div>
-                                            <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('required')">New password is required</mat-error>
-                                            <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
                                         
-                                            <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
-                                        </div>
                                         <div class="col-12">
-                                            <button class="btn btn-info"(click)="updateEmployee()" [disabled]="!updateForm.valid" >Save Changes</button>
+                                            <button class="btn btn-info"(click)="UpdateEmployeeInfo()" [disabled]="!infoForm.valid" >Save Changes</button>
                                         </div>                                
                                     </div>   
                                 </form>                               
                             </div>   
+                            
+                        </div>
+                       
+                      <div class="body password">
+                       
+                    <div class="row"  >
+                     
+
+                        <form [formGroup]="passwordForm">
+
+                            <div class="row passwordForm">
+                               
+                                <div class="col-lg-7 col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control"formControlName="password"(change)="matchError()"  placeholder="New Password">
+                                    </div>
+                                    <mat-error *ngIf="passwordForm.get('password')?.hasError('required')">New is required</mat-error>
+                                    <mat-error *ngIf="passwordForm.get('password')?.hasError('minlength')">New Password must be at least 8 </mat-error>
+                                </div>
+                                <div class="col-lg-7 col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control"formControlName="confirmPassword"(change)="matchError()" placeholder="Confirm Password">
+                                    </div>
+                                    <mat-error *ngIf="passwordForm.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
+                                    <mat-error *ngIf="passwordForm.get('confirmPassword')?.hasError('minlength')">Confirm Password must be at least 8</mat-error>
+                                
+                                    <mat-error *ngIf="passwordForm.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-info"(click)="UpdateEmployeePassword()" [disabled]="!passwordForm.valid" >Save Changes</button>
+                                </div>                                
+                            </div>   
+                        </form>  
+                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>
          
             </div>
         </div>
-    </div>
 </section>
 
-<ng-template #callEditDailog>
-    <div class="mat-dialog-container">
-    <div class="dialog-header">
-    <h2>Edit Image Profile</h2>
-    </div>
-    <form class="example-container" [formGroup]="imageForm">
-    
-    <div>
-    <label for="name">Image:</label>
-    
-          <input type="file"  formControlName="image"    #file   (change)="UploadImage(file.files)">
-          <mat-error *ngIf="imageForm.get('image')?.hasError('required')">Image is required</mat-error>
-    
-    </div>
-    <div class="dialog-footer">
-    <button mat-raised-button color="primary" mat-dialog-close="yes" >Save</button>
-    </div>
-    </form>
-    </div>
-    </ng-template>

@@ -22,6 +22,7 @@ export class UsersComponent implements OnInit {
   users: any[] = [];
   hide = true;
   hidee = true;
+  usernameAlreadyExists: boolean = false;
 
   constructor( private usersService: UsersService,private toastr: ToastrService,private dialog:MatDialog) {}
 
@@ -32,7 +33,7 @@ export class UsersComponent implements OnInit {
   }
 
   form :FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -41,8 +42,8 @@ export class UsersComponent implements OnInit {
   });
 
   edit :FormGroup  = new FormGroup({
-    userid: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required]),
+    userId: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
 
   });
 
@@ -73,8 +74,8 @@ export class UsersComponent implements OnInit {
 
     openEditDailog(user: any){
       this.edit.setValue({
-        userid: user.userid,
-        username: user.username,
+        userId: user.userId,
+        userName: user.userName,
      
       });
     
@@ -99,7 +100,14 @@ export class UsersComponent implements OnInit {
       
               console.log('Error while update user:', error);
                 this.toastr.error('Error while update user.', 'Error'); 
-      
+                if (error.error && error.error.error) {
+                  if (error.error.error === 'username already exists') {
+                    this.usernameAlreadyExists = true;
+                  }
+                
+                } else {
+                  console.log(error);
+                }
             }
           );   
         } else if (result == 'no') {

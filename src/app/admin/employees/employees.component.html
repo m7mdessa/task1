@@ -27,36 +27,36 @@
               <div class="col-lg-12">
                   <div class="card">
                       <div class="table-responsive">
-                          <table class="table table-hover product_item_list">
-                              <thead>
+                        <table class="table table-hover product_item_list c_table theme-color mb-0">
+                          <thead>
                                   <tr>
-                                      <th>Image</th>
-                                      <th>First Name</th>
-                                      <th>Last Name</th>
+                                      <th style="color: #555;">Image</th>
+                                      <th style="color: #555;">First Name</th>
+                                      <th style="color: #555;">Last Name</th>
                                       <th data-breakpoints="sm xs">Email</th>
-                                      <th data-breakpoints="sm xs">Phone</th>
-                                      <th data-breakpoints="xs">Salary</th>
-                                      <th data-breakpoints="xs md">Department</th>
-                                      <th data-breakpoints="xs md">Hire Date</th>
+                                      <th style="color: #555;" data-breakpoints="sm xs">Phone</th>
+                                      <th style="color: #555;" data-breakpoints="xs">Salary</th>
+                                      <th style="color: #555;" data-breakpoints="xs md">Department</th>
+                                      <th style="color: #555;" data-breakpoints="xs md">Hire Date</th>
 
-                                      <th data-breakpoints="sm xs md">Action</th>
+                                      <th style="color: #555;" data-breakpoints="sm xs md">Action</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   <tr *ngFor="let employee of Employees">
                                       <td><img src="assets/img/{{employee.image}}"  width="48" alt="profile-image"></td>
-                                      <td><span class="text-muted">{{ employee.firstname }}</span></td>
-                                      <td><span class="text-muted">{{ employee.lastname }}</span></td>
+                                      <td><span class="text-muted">{{ employee.firstName }}</span></td>
+                                      <td><span class="text-muted">{{ employee.lastName }}</span></td>
                                       <td><span class="text-muted">{{ employee.email }}</span></td>
                                       <td><span class="text-muted">{{ employee.phone }}</span></td>
 
                                       <td>${{ employee.salary }}</td>
-                                      <td><span class="col-green">{{employee.departmentname }}</span></td>
+                                      <td><span class="col-green">{{employee.departmentName }}</span></td>
                                       <td><span class="col-green">{{ employee.hireDate | date: 'mediumDate' }}</span></td>
                                       <td>
-                                        <a (click)="OpenDialogDetail(employee.employeeid)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
+                                        <a (click)="OpenDialogDetail(employee.employeeId)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
                                         <a (click)="openEditDailog(employee)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
-                                        <a (click)="openDeleteDailog(employee.employeeid)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
+                                        <a (click)="openDeleteDailog(employee.employeeId)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
                                     </td>
                                   
                                   </tr>
@@ -106,11 +106,11 @@
   
 
   <div *ngIf="Employee">
-    <p><strong>First Name:</strong> {{ Employee.firstname }}</p>
-    <p><strong>Last Name:</strong> {{ Employee.lastname }}</p>
+    <p><strong>First Name:</strong> {{ Employee.firstName }}</p>
+    <p><strong>Last Name:</strong> {{ Employee.lastName }}</p>
     <p><strong>Email:</strong> {{ Employee.email }}</p>
     <p><strong>Phone:</strong> {{ Employee.phone }}</p>
-    <p><strong>Department:</strong> {{ Employee.departmentname }}</p>
+    <p><strong>Department:</strong> {{ Employee.departmentName }}</p>
     <p><strong>Salary:</strong> {{ Employee.salary }}</p>
     <p><strong>Hire Date:</strong> {{ Employee.hireDate | date: 'mediumDate' }}</p>
 
@@ -128,8 +128,8 @@
 
 <mat-form-field appearance="outline">
   <mat-label>Enter First Name</mat-label>
-  <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
-  <mat-error *ngIf="edit.get('firstname')?.hasError('required')">First name is required</mat-error>
+  <input matInput type="text" placeholder="Enter first name" formControlName="firstName">
+  <mat-error *ngIf="edit.get('firstName')?.hasError('required')">First name is required</mat-error>
 </mat-form-field>
 
 <div class="form-field-spacer">
@@ -137,8 +137,8 @@
 </div>
 <mat-form-field appearance="outline">
   <mat-label>Enter Last Name</mat-label>
-  <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
-  <mat-error *ngIf="edit.get('lastname')?.hasError('required')">Last name is required</mat-error>
+  <input matInput type="text" placeholder="Enter last name" formControlName="lastName">
+  <mat-error *ngIf="edit.get('lastName')?.hasError('required')">Last name is required</mat-error>
 </mat-form-field>
 <div class="form-field-spacer"></div>
 
@@ -163,9 +163,9 @@
 <div class="form-field-spacer"></div>
 <mat-form-field>
   <mat-label>Select Department</mat-label>
-<mat-select formControlName="departmentid" required>
-<mat-option *ngFor="let department of departments" [value]="department.departmentid">
-  {{ department.departmentname }}
+<mat-select formControlName="departmentId" required>
+<mat-option *ngFor="let department of departments" [value]="department.departmentId">
+  {{ department.departmentName }}
 </mat-option>
 </mat-select>
 
@@ -184,13 +184,21 @@
       <div class="dialog-header">
         <h2>Add Employee</h2>
       </div>
+      <div *ngIf="usernameAlreadyExists" class="text-danger">
+        username already exists
+      </div>
+      <br>
+      <div *ngIf="emailAlreadyExists" class="text-danger">
+        email already exists
+      </div>
+      <br>
       <form class="example-container" [formGroup]="form">
      
 
         <mat-form-field appearance="outline">
           <mat-label>Enter First Name</mat-label>
-          <input matInput type="text" placeholder="Enter first name" formControlName="firstname">
-          <mat-error *ngIf="form.get('firstname')?.hasError('required')">First name is required</mat-error>
+          <input matInput type="text" placeholder="Enter first name" formControlName="firstName">
+          <mat-error *ngIf="form.get('firstName')?.hasError('required')">First name is required</mat-error>
         </mat-form-field>
         
         <div class="form-field-spacer">
@@ -198,14 +206,14 @@
         </div>
         <mat-form-field appearance="outline">
           <mat-label>Enter Last Name</mat-label>
-          <input matInput type="text" placeholder="Enter last name" formControlName="lastname">
-          <mat-error *ngIf="form.get('lastname')?.hasError('required')">Last name is required</mat-error>
+          <input matInput type="text" placeholder="Enter last name" formControlName="lastName">
+          <mat-error *ngIf="form.get('lastName')?.hasError('required')">Last name is required</mat-error>
         </mat-form-field>
         <div class="form-field-spacer"></div>
         <mat-form-field appearance="outline">
           <mat-label>Enter User Name</mat-label>
-          <input matInput type="text" placeholder="Enter user name" formControlName="username">
-          <mat-error *ngIf="form.get('username')?.hasError('required')">User name is required</mat-error>
+          <input matInput type="text" placeholder="Enter user name" formControlName="userName">
+          <mat-error *ngIf="form.get('userName')?.hasError('required')">User name is required</mat-error>
         </mat-form-field>
         <div class="form-field-spacer"></div>
 
@@ -232,9 +240,9 @@
         <div class="form-field-spacer"></div>
         <mat-form-field>
           <mat-label>Select Department</mat-label>
-      <mat-select formControlName="departmentid" required>
-        <mat-option *ngFor="let department of departments" [value]="department.departmentid">
-          {{ department.departmentname }}
+      <mat-select formControlName="departmentId" required>
+        <mat-option *ngFor="let department of departments" [value]="department.departmentId">
+          {{ department.departmentName }}
         </mat-option>
       </mat-select>
 
@@ -252,7 +260,7 @@
         <div class="form-field-spacer"></div>
         <mat-form-field appearance="outline">
           <mat-label>Enter Confirm password</mat-label>
-          <input matInput [type]="hidee ? 'confirmPassword' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
+          <input matInput [type]="hidee ? 'password' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
           <button mat-icon-button matSuffix (click)="hidee = !hidee" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hidee">
             <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
@@ -269,3 +277,6 @@
       </form>
     </div>
   </ng-template>
+
+
+ 

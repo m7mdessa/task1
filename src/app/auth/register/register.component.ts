@@ -31,9 +31,9 @@ export class RegisterComponent implements OnInit{
 
   registerForm :FormGroup = new FormGroup({
 
-    firstname: new FormControl('', Validators.required),
-    lastname: new FormControl('', Validators.required),
-    username: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    userName: new FormControl('', Validators.required),
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
     phone:new FormControl( '', [Validators.required, ]),
     password:new FormControl( '', [Validators.required, Validators.minLength(8), ]),

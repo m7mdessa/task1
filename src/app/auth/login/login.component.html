@@ -11,11 +11,11 @@
             
             <div class="body">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="User Name"[formControl]="username">
+                    <input type="text" class="form-control" placeholder="User Name"[formControl]="userName">
                 
                 </div>
-                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
-                  <div *ngIf="username.hasError('required')">Username is required.</div>
+                <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="text-danger">
+                  <div *ngIf="userName.hasError('required')">Username is required.</div>
                 </div>
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Password"[formControl]="password">

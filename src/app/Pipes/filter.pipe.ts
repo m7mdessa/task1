@@ -25,9 +25,8 @@ export class FilterPipe implements PipeTransform {
         }
         return false;
       });
-
       if (filteredItems.length === 0) {
-        this.toastr.warning('No matching employees or departments found', 'No Match');
+        this.toastr.error('No matching employees or departments found', 'No Match');
       }
 
       return filteredItems;

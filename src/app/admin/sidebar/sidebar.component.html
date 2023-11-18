@@ -3,30 +3,30 @@
 
 <aside id="leftsidebar" class="sidebar">
 
-    <div class="menu">
-        <ul class="list">
-          
-            <li>
-                <a routerLink="/admin"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
-            
-            </li>
-           
-        
-            <li>
-                <a routerLink="/admin/Users"><span>Users</span></a>
-        
-            </li>
-            <li>
-                <a routerLink="/admin/Employees"><span>Employees</span></a>
-        
-            </li>
-            <li>
-                <a routerLink="/admin/Departments"><span>Departments</span></a>
-        
-            </li>
-               
-        </ul>
-    </div>
+  <div class="menu">
+    <ul class="list">
+ 
+      <li>
+          <a routerLink="/admin"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
+      
+      </li>
+     
+  
+      <li>
+          <a routerLink="/admin/Users-Logins"><span>Users Logins </span></a>
+  
+      </li>
+      <li>
+          <a routerLink="/admin/Employees"><span>Employees</span></a>
+  
+      </li>
+      <li>
+          <a routerLink="/admin/Departments"><span>Departments</span></a>
+  
+      </li>
+         
+  </ul>
+  </div>
 </aside>
 
 <div class="navbar-right">
@@ -65,8 +65,7 @@
      
        <div class="card"*ngIf="filterText">
         <div class="list-group">
-            <div class="list-group-item" *ngFor="let item of (employeesAndDepartments | filter: filterText)">
-              <ng-container *ngIf="item.firstname">
+          <div class="list-group-item" *ngFor="let item of (employeesAndDepartments | filter: filterText); let foundResults = count">              <ng-container *ngIf="item.firstname">
                 <h5 class="list-group-item-heading"(click)="OpenEmployeeDetail(item.employeeid)">Employee: {{ item.firstname }} {{ item.lastname }}</h5>
               
               </ng-container>
@@ -74,6 +73,10 @@
               <ng-container *ngIf="item.departmentname">
                 <h5 class="list-group-item-heading"(click)="OpenDepartmentDetail(item.departmentid)">Department: <span class="col-green">{{ item.departmentname }}</span></h5>
               </ng-container>
+
+              <div class="list-group-item" *ngIf="!item.departmentname && !item.firstname">
+                <h5 class="list-group-item-heading text-danger">No matching employees or departments found</h5>
+              </div>
             </div>
           </div>
           

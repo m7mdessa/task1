@@ -16,7 +16,7 @@ const routes: Routes = [
 
 {path:'Departments', component:DepartmentsComponent},
 
-{path:'Users', component:UsersComponent},
+{path:'Users-Logins', component:UsersComponent},
 
 
 ];
