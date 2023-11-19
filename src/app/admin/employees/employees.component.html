@@ -33,7 +33,7 @@
                                       <th style="color: #555;">Image</th>
                                       <th style="color: #555;">First Name</th>
                                       <th style="color: #555;">Last Name</th>
-                                      <th data-breakpoints="sm xs">Email</th>
+                                      <th style="color: #555;" data-breakpoints="sm xs">Email</th>
                                       <th style="color: #555;" data-breakpoints="sm xs">Phone</th>
                                       <th style="color: #555;" data-breakpoints="xs">Salary</th>
                                       <th style="color: #555;" data-breakpoints="xs md">Department</th>
@@ -184,10 +184,7 @@
       <div class="dialog-header">
         <h2>Add Employee</h2>
       </div>
-      <div *ngIf="usernameAlreadyExists" class="text-danger">
-        username already exists
-      </div>
-      <br>
+
       <div *ngIf="emailAlreadyExists" class="text-danger">
         email already exists
       </div>
@@ -210,12 +207,7 @@
           <mat-error *ngIf="form.get('lastName')?.hasError('required')">Last name is required</mat-error>
         </mat-form-field>
         <div class="form-field-spacer"></div>
-        <mat-form-field appearance="outline">
-          <mat-label>Enter User Name</mat-label>
-          <input matInput type="text" placeholder="Enter user name" formControlName="userName">
-          <mat-error *ngIf="form.get('userName')?.hasError('required')">User name is required</mat-error>
-        </mat-form-field>
-        <div class="form-field-spacer"></div>
+     
 
         <mat-form-field appearance="outline">
           <mat-label>Enter Salary</mat-label>
@@ -247,29 +239,7 @@
       </mat-select>
 
         </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Enter password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password"(change)="matchError()">
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
-          <mat-error *ngIf="form.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
-
-        </mat-form-field>
-        <div class="form-field-spacer"></div>
-        <mat-form-field appearance="outline">
-          <mat-label>Enter Confirm password</mat-label>
-          <input matInput [type]="hidee ? 'password' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
-          <button mat-icon-button matSuffix (click)="hidee = !hidee" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hidee">
-            <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
-          <mat-error *ngIf="form.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
-
-          <mat-error *ngIf="form.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
-
-        </mat-form-field>
+     
 
         <div class="dialog-footer">
           <button mat-raised-button color="primary" (click)="addEmployee()" [disabled]="!form.valid">Add</button>

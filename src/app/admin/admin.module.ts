@@ -7,9 +7,10 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { SharedModule } from '../shared/shared.module';
 import { NavComponent } from './nav/nav.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { UsersComponent } from './users/users.component';
+import { UsersLoginsComponent } from './userslogins/userslogins.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RolesComponent } from './roles/roles.component';
 
 
 @NgModule({
@@ -18,9 +19,10 @@ import { ProfileComponent } from './profile/profile.component';
     DepartmentsComponent,
     NavComponent,
     SidebarComponent,
-    UsersComponent,
+    UsersLoginsComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    RolesComponent
   ],
   imports: [
     CommonModule,

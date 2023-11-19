@@ -7,11 +7,14 @@
               <div class="col-lg-7 col-md-6 col-sm-12">
                   <ul class="breadcrumb">
                       <li class="breadcrumb-item"><a><i class="zmdi zmdi-home"></i> Admin</a></li>
-                      <li class="breadcrumb-item active">Users List</li>
+                      <li class="breadcrumb-item active">Users Logins List</li>
                   </ul>
-                  <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
               </div>
-             
+              <div class="col-lg-5 col-md-6 col-sm-12">                
+                <button mat-fab color="primary"class="add-button"(click)="OpenDialogAdd()" aria-label="Example icon button with a delete icon">
+                <mat-icon  class="icon">add</mat-icon>
+                </button>
+               </div>
           </div>
       </div>
       <br>
@@ -66,8 +69,13 @@
   <ng-template #callCreateDialog>
     <div class="mat-dialog-container">
       <div class="dialog-header">
-        <h2>Add User</h2>
+        <h2>Add User Login</h2>
       </div>
+
+      <div *ngIf="usernameAlreadyExists" class="text-danger">
+        username already exists
+      </div>
+      <br>
       <form class="example-container" [formGroup]="form">
         <mat-form-field appearance="outline">
           <mat-label>Enter User Name</mat-label>
@@ -75,15 +83,29 @@
           <mat-error *ngIf="form.get('userName')?.hasError('required')">User name is required</mat-error>
         </mat-form-field>
         <div class="form-field-spacer"></div>
+        <mat-form-field>
+          <mat-label>Select Employee</mat-label>
+      <mat-select formControlName="employeeId" required>
+        <mat-option *ngFor="let employee of Employees" [value]="employee.employeeId">
+          {{ employee.firstName }} {{ employee.lastName }} 
+        </mat-option>
+      </mat-select>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Enter Email</mat-label>
-          <input matInput type="email" placeholder="Enter email" formControlName="email">
-          <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
-          <mat-error *ngIf="form.get('email')?.hasError('pattern')">Invalid email format</mat-error>
         </mat-form-field>
+     
         <div class="form-field-spacer"></div>
 
+        <mat-form-field>
+          <mat-label>Select Role</mat-label>
+      <mat-select formControlName="roleId" required>
+        <mat-option *ngFor="let role of Roles" [value]="role.roleId">
+          {{ role.roleName }} 
+        </mat-option>
+      </mat-select>
+
+        </mat-form-field>
+     
+        <div class="form-field-spacer"></div>
         <mat-form-field appearance="outline">
           <mat-label>Enter password</mat-label>
           <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password">
@@ -97,7 +119,7 @@
         <div class="form-field-spacer"></div>
         <mat-form-field appearance="outline">
           <mat-label>Enter Confirm password</mat-label>
-          <input matInput [type]="hidee ? 'confirmPassword' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
+          <input matInput [type]="hidee ? 'password' : 'text'" placeholder="Confirm password" formControlName="confirmPassword"(change)="matchError()">
           <button mat-icon-button matSuffix (click)="hidee = !hidee" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidee">
             <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
@@ -127,7 +149,7 @@
 <ng-template #callDetailDailog>
   <div class="mat-dialog-container">
   <div class="dialog-header">
-  <h2>User Detail</h2>
+  <h2>User Login Detail</h2>
   </div>
   <div *ngIf="User">
     <p><strong>User Name:</strong> {{ User.userName }}</p>
@@ -142,7 +164,7 @@
   <ng-template #callEditDailog>
     <div class="mat-dialog-container">
     <div class="dialog-header">
-    <h2>Edit User</h2>
+    <h2>Edit User Login</h2>
     </div>
     <div *ngIf="usernameAlreadyExists" class="text-danger">
       username already exists

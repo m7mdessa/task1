@@ -20,12 +20,8 @@ export class EmployeesComponent implements OnInit {
 
   Employees: any[] = [];
   Employee: any;
-  hide = true;
-  hidee = true;
   departments: any[] = [];
-  usernameAlreadyExists: boolean = false;
   emailAlreadyExists: boolean = false;
-  isLinear = false;
 
   constructor( private employeeService: EmployeeService,private departmentService: DepartmentService, private toastr: ToastrService,private dialog:MatDialog) {}
 
@@ -43,9 +39,7 @@ export class EmployeesComponent implements OnInit {
     email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
     departmentId: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    userName: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+  
   });
 
   edit :FormGroup  = new FormGroup({
@@ -157,6 +151,8 @@ export class EmployeesComponent implements OnInit {
             () => {
               this.Employees = this.Employees.filter((Employee) => Employee.id !== id);
               console.log('Employee deleted successfully.');
+              this.toastr.success('Employee deleted successfully.', 'Success');
+
               this.dialog.closeAll();  
               this.getEmployees(); 
     
@@ -192,9 +188,6 @@ export class EmployeesComponent implements OnInit {
             console.log('Error while add employee:', error);
               this.toastr.error('Error while add employee.', 'Error'); 
               if (error.error && error.error.error) {
-                if (error.error.error === 'username already exists') {
-                  this.usernameAlreadyExists = true;
-                }
                 if (error.error.error === 'email already exists') {
                   this.emailAlreadyExists = true;
                 }

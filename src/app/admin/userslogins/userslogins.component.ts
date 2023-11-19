@@ -1,40 +1,47 @@
 import { Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import { UsersService } from 'src/app/service/users.service';
+import { UserLoginService } from 'src/app/service/userlogin.service';
 import * as CryptoJS from 'crypto-js';
 
 import { ToastrService } from 'ngx-toastr'; 
 import { FormGroup, FormControl,Validators } from '@angular/forms';   
 import { MatDialog } from '@angular/material/dialog';
+import { EmployeeService } from 'src/app/service/employee.service';
+import { RoleService } from 'src/app/service/role.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
+  selector: 'app-users-logins',
+  templateUrl: './userslogins.component.html',
+  styleUrls: ['./userslogins.component.css'],
 
 })
-export class UsersComponent implements OnInit {
+export class UsersLoginsComponent implements OnInit {
   @ViewChild('callCreateDialog') callCreateDialog! :TemplateRef<any>
   @ViewChild('callDeleteDailog') callDelete!:TemplateRef<any>
   @ViewChild('callEditDailog') callEditDailog!:TemplateRef<any>
   @ViewChild('callDetailDailog') callDetailDailog!:TemplateRef<any>
 
+  Roles: any[] = [];
+  Employees: any[] = [];
   User: any;
   users: any[] = [];
   hide = true;
   hidee = true;
   usernameAlreadyExists: boolean = false;
 
-  constructor( private usersService: UsersService,private toastr: ToastrService,private dialog:MatDialog) {}
+  constructor( private userLogin: UserLoginService,private RoleService: RoleService,private employeeService: EmployeeService,private toastr: ToastrService,private dialog:MatDialog) {}
 
 
   ngOnInit(): void {
     this.getUsers();
-  
+    this.getEmployees();
+    this.getRoles();
+
   }
 
   form :FormGroup = new FormGroup({
     userName: new FormControl('', [Validators.required]),
-    email: new FormControl('',[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
+    roleId: new FormControl('', [Validators.required]),
+    employeeId: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
 
@@ -55,17 +62,31 @@ export class UsersComponent implements OnInit {
     }
   }
 
-    OpenDialogAdd(){
+  OpenDialogAdd(){
     
   this.dialog.open(this.callCreateDialog);
   
   }
+  getRoles() {
+    this.RoleService.getRoles().subscribe((Roles) => {
+      this.Roles = Roles;
+    });
+
+  }
+  getEmployees() {
+    this.employeeService.getEmployees().subscribe((Employee) => {
+      this.Employees = Employee;
+    });
+
+  }
+
   getUsers() {
-    this.usersService.getUsers().subscribe((users) => {
+    this.userLogin.getUsers().subscribe((users) => {
       this.users = users;
     });
 
   }
+
   displayPassword(password: string): string {
     const hashedPassword = CryptoJS.SHA256(password).toString();
     return hashedPassword;
@@ -84,7 +105,7 @@ export class UsersComponent implements OnInit {
        if(result!=undefined)
        {
         if (result == 'yes') {
-          this.usersService.updateUser(this.edit.value).subscribe(
+          this.userLogin.updateUser(this.edit.value).subscribe(
             (response) => {
               console.log( this.edit.value);
       
@@ -124,7 +145,7 @@ export class UsersComponent implements OnInit {
   OpenDialogDetail(id:number){
     
     this.dialog.open(this.callDetailDailog);
-    this.usersService.getUser(id).subscribe( (User) => {
+    this.userLogin.getUser(id).subscribe( (User) => {
         this.User = User;
       
       });  
@@ -138,7 +159,7 @@ export class UsersComponent implements OnInit {
        if(result!=undefined)
        {
         if (result == 'yes') {
-          this.usersService.deleteUser(id).subscribe(
+          this.userLogin.deleteUser(id).subscribe(
             () => {
               this.users = this.users.filter((user) => user.id !== id);
               console.log('User deleted successfully.');
@@ -164,7 +185,7 @@ export class UsersComponent implements OnInit {
 
   addUser(){
     console.log(this.form.value);
-    this.usersService.addUser(this.form.value).subscribe((_res:any) => {
+    this.userLogin.addUser(this.form.value).subscribe((_res:any) => {
          console.log('User created successfully!');
          this.toastr.success('User added successfully.', 'Success');
          this.getUsers(); 
@@ -173,8 +194,14 @@ export class UsersComponent implements OnInit {
           },
           (error) => {
             console.log( this.form.value);
-    
-            console.log('Error while add user:', error);
+            if (error.error && error.error.error) {
+              if (error.error.error === 'username already exists') {
+                this.usernameAlreadyExists = true;
+              }
+            
+            } else {
+              console.log(error);
+            }
               this.toastr.error('Error while add user.', 'Error'); 
     
           });
