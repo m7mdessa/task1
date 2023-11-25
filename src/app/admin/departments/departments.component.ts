@@ -52,7 +52,7 @@ export class DepartmentsComponent implements OnInit {
     });
     
     edit :FormGroup = new FormGroup({
-      departmentId: new FormControl(''),
+      id: new FormControl(''),
       departmentName: new FormControl('',[Validators.required]),
       departmentLocation: new FormControl('',[Validators.required])
 
@@ -75,7 +75,7 @@ OpenDialogAdd(){
 
   openEditDailog(department: any){
     this.edit.setValue({
-      departmentId: department.departmentId,
+      id: department.id,
       departmentName: department.departmentName,
       departmentLocation: department.departmentLocation,
     

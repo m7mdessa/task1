@@ -3,6 +3,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { EmployeeService } from 'src/app/service/employee.service';
 import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
@@ -13,9 +14,9 @@ import { ProfileService } from 'src/app/service/profile.service';
 
 export class ProfileComponent implements OnInit {
 
-  profile: any[] = [];
+  profile: any;
 
-  constructor(private employee: ProfileService,private toastr: ToastrService,private dialog:MatDialog ) {}
+  constructor(private employee: ProfileService,private employeeService: EmployeeService,private toastr: ToastrService,private dialog:MatDialog ) {}
 
   
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class ProfileComponent implements OnInit {
 
   infoForm : FormGroup = new FormGroup({
     
-    employeeId: new FormControl(),
+    id: new FormControl(),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -35,17 +36,14 @@ export class ProfileComponent implements OnInit {
 
    });
 
-   passwordForm : FormGroup = new FormGroup({
-    
-    employeeId: new FormControl(),
+   passwordForm : FormGroup = new FormGroup({ 
+    id: new FormControl(),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-
-
    });
 
    imageForm : FormGroup = new FormGroup({
-    employeeId: new FormControl(),
+    id: new FormControl(),
     image: new FormControl('', [Validators.required]),
    });
 
@@ -73,7 +71,7 @@ export class ProfileComponent implements OnInit {
       console.log('No user data found in local storage.');
     }
     
-    this.passwordForm.get('employeeId')?.setValue(employeeId);
+    this.passwordForm.get('id')?.setValue(employeeId);
     this.employee.UpdateEmployeePassword(this.passwordForm.value).subscribe(
       (responsee) => {
         console.log( this.passwordForm.value);
@@ -107,7 +105,7 @@ export class ProfileComponent implements OnInit {
       console.log('No user data found in local storage.');
     }
     
-    this.imageForm.get('employeeId')?.setValue(employeeId);
+    this.imageForm.get('id')?.setValue(employeeId);
     this.employee.UpdateImage(this.imageForm.value).subscribe(
       (responsee) => {
         console.log( this.imageForm.value);
@@ -141,7 +139,7 @@ export class ProfileComponent implements OnInit {
       console.log('No user data found in local storage.');
     }
     
-    this.infoForm.get('employeeId')?.setValue(employeeId);
+    this.infoForm.get('id')?.setValue(employeeId);
     this.employee.UpdateEmployeeInfo(this.infoForm.value).subscribe(
       (responsee) => {
         console.log( this.infoForm.value);
@@ -169,12 +167,12 @@ export class ProfileComponent implements OnInit {
 
       const employeeData = JSON.parse(employee);
     
-      var employeeId = employeeData.EmployeeId;
+      var id = employeeData.EmployeeId;
     
     } else {
       console.log('No user data found in local storage.');
     }
-    this.employee.GetProfileEmployee(employeeId).subscribe((profile) => {
+    this.employeeService.getEmployee(id).subscribe((profile) => {
       this.profile = profile;
       console.log('profile',profile);
 

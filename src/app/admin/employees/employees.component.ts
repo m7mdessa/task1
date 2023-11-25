@@ -43,7 +43,7 @@ export class EmployeesComponent implements OnInit {
   });
 
   edit :FormGroup  = new FormGroup({
-    employeeId: new FormControl('', [Validators.required]),
+    id: new FormControl('', [Validators.required]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     salary: new FormControl('', [Validators.required]),
@@ -94,7 +94,7 @@ export class EmployeesComponent implements OnInit {
    
   openEditDailog(employee: any){
     this.edit.setValue({
-      employeeId: employee.employeeId,
+      id: employee.id,
       firstName: employee.firstName,
       lastName: employee.lastName,
       salary: employee.salary,

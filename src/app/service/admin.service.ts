@@ -20,7 +20,10 @@ export class AdminService {
   GetNumberOfEmployees(): Observable<number> {
     return this.http.get<number>('https://localhost:7088/api/Admin/NumberOfEmployees');
   }
- 
+
+  updateAdmin(admin: any): Observable<any> {
+    return this.http.put<any>('https://localhost:7088/api/Admin/UpdateAdmin/', admin);
+  }
 
   
   

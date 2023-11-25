@@ -17,6 +17,10 @@ export class EmployeeService {
     return this.http.get<any[]>('https://localhost:7088/api/Employee');
   }
 
+  searchEmployees(searchTerm:any): Observable<any[]> {
+    return this.http.get<any[]>('https://localhost:7088/api/Employee/Search/'+searchTerm);
+  }
+  
   getEmployee(id: number): Observable<any> {
     return this.http.get<any>('https://localhost:7088/api/Employee/GetEmployeeById/'+id);
   }

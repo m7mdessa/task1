@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from 'src/app/service/profile.service';
+import { UserLoginService } from 'src/app/service/userlogin.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,9 +15,9 @@ import { ProfileService } from 'src/app/service/profile.service';
 export class ProfileComponent implements OnInit {
   @ViewChild('callEditDailog') callEditDailog!:TemplateRef<any>
 
-  profile: any[] = [];
+  profile: any;
 
-  constructor(private admin: ProfileService,private toastr: ToastrService,private dialog:MatDialog ) {}
+  constructor(private admin: ProfileService,private userLogin: UserLoginService,private toastr: ToastrService,private dialog:MatDialog ) {}
 
   
   ngOnInit(): void {
@@ -27,9 +28,7 @@ export class ProfileComponent implements OnInit {
 
   updateForm : FormGroup = new FormGroup({
     
-    userId: new FormControl(),
-   // image: new FormControl([Validators.required]),
-    userName: new FormControl('', Validators.required),
+    id: new FormControl(),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
 
@@ -59,8 +58,8 @@ export class ProfileComponent implements OnInit {
     } else {
       console.log('No user data found in local storage.');
     }
-    this.updateForm.get('userid')?.setValue(userId);
-    this.admin.updateAdmin(this.updateForm.value).subscribe(
+    this.updateForm.get('id')?.setValue(userId);
+    this.userLogin.updateUser(this.updateForm.value).subscribe(
       (responsee) => {
         console.log( this.updateForm.value);
 
@@ -92,7 +91,7 @@ export class ProfileComponent implements OnInit {
     } else {
       console.log('No user data found in local storage.');
     }
-    this.admin.GetProfileAdmin(userId).subscribe((profile) => {
+    this.userLogin.getUser(userId).subscribe((profile) => {
       this.profile = profile;
       console.log('profile',profile);
 

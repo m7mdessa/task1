@@ -17,75 +17,55 @@ export class SidebarComponent implements OnInit {
   @ViewChild('callDetailEmployee') callDetailEmployee! :TemplateRef<any>
   @ViewChild('callDetailDepartment') callDetailDepartment! :TemplateRef<any>
 
-  Employees: any[] = [];
-  Employee: any;
-  departments: any[] = [];
-  department: any;
+  employees: any[] = [];
+  employee: any;
+  noResultsMessage: string = '';
+  searchTerm: string = '';
 
-  employeesAndDepartments: any[] = [];
-  foundResults : string ='';
-  filterText:string='';
   constructor( private employeeService: EmployeeService,private departmentService: DepartmentService,private router: Router,private dialog:MatDialog) {}
 
   ngOnInit(): void {
-  this.getEmployees();
-  this.getDepartments();
-  this.mergeData();
+  this.searchEmployees();
 
   }
-  getEmployee(id:number){
-    
-    this.employeeService.getEmployee(id).subscribe( (Employee) => {
-        this.Employee = Employee;
-      });  
-    }
 
-    getDepartments() {
-      this.departmentService.getDepartments().subscribe((departments) => {
-        this.departments = departments;
-        this.mergeData();
-
-      });
+ searchEmployees()
+  {
   
+    if (this.searchTerm.trim() === '')
+    {
+        this.employees = [];
+        return;
     }
-
-  getEmployees() {
-    this.employeeService.getEmployees().subscribe((Employee) => {
-      this.Employees = Employee;
-      this.mergeData();
-
-    });
-
-    }
-    OpenEmployeeDetail(id:number){
-    
-      this.dialog.open(this.callDetailEmployee);
-      this.employeeService.getEmployee(id).subscribe( (Employee) => {
-          this.Employee = Employee;
-        
-        });  
+  
+    this.employeeService.searchEmployees(this.searchTerm).subscribe((Employee) => {
+      this.employees = Employee;
+      if (this.employees.length === 0) {
+        this.noResultsMessage = 'No results found.';
+      } else {
+        this.noResultsMessage = '';
       }
 
-      OpenDepartmentDetail(id:number){
-    
-        this.dialog.open(this.callDetailDepartment);
-        this.departmentService.getDepartment(id).subscribe( (department) => {
-            this.department = department;
-          
-          });  
-        }
-
-        
-  mergeData() {
-    this.employeesAndDepartments = [...this.Employees, ...this.departments];
+    });
   }
-  OpenDialogSearch(){
+
+
+    OpenEmployeeDetail(id:number)
+    {
     
-    this.dialog.open(this.callSearchDialog);
-    
+      this.dialog.open(this.callDetailEmployee);
+      this.employeeService.getEmployee(id).subscribe( (employee) => {
+          this.employee = employee;
+        
+        });  
     }
+ 
+  OpenDialogSearch()
+  {
+    this.dialog.open(this.callSearchDialog);
+  } 
   
-   logout() {
+  logout() {
     localStorage.clear();
     this.router.navigate(['']);
   }

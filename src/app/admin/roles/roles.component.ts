@@ -39,7 +39,7 @@ export class RolesComponent implements OnInit {
     });
     
     edit :FormGroup = new FormGroup({
-      roleId: new FormControl(''),
+      id: new FormControl(''),
       roleName: new FormControl('',[Validators.required]),
 
     });
@@ -61,7 +61,7 @@ OpenDialogAdd(){
 
   openEditDailog(Role: any){
     this.edit.setValue({
-      roleId: Role.roleId,
+      id: Role.id,
       roleName: Role.roleName,
     
     });

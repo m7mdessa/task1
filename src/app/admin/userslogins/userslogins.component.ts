@@ -49,7 +49,7 @@ export class UsersLoginsComponent implements OnInit {
   });
 
   edit :FormGroup  = new FormGroup({
-    userId: new FormControl('', [Validators.required]),
+    id: new FormControl('', [Validators.required]),
     userName: new FormControl('', [Validators.required]),
 
   });
@@ -95,7 +95,7 @@ export class UsersLoginsComponent implements OnInit {
 
     openEditDailog(user: any){
       this.edit.setValue({
-        userId: user.userId,
+        id: user.id,
         userName: user.userName,
      
       });

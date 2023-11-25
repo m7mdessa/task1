@@ -54,9 +54,9 @@
                                       <td><span class="col-green">{{employee.departmentName }}</span></td>
                                       <td><span class="col-green">{{ employee.hireDate | date: 'mediumDate' }}</span></td>
                                       <td>
-                                        <a (click)="OpenDialogDetail(employee.employeeId)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
+                                        <a (click)="OpenDialogDetail(employee.id)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-info"></i></a>
                                         <a (click)="openEditDailog(employee)"class="btn btn-default waves-effect waves-float btn-sm waves-green"><i class="zmdi zmdi-edit"></i></a>
-                                        <a (click)="openDeleteDailog(employee.employeeId)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
+                                        <a (click)="openDeleteDailog(employee.id)" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
                                     </td>
                                   
                                   </tr>

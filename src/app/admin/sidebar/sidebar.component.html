@@ -55,34 +55,51 @@
         <h2>Search</h2>
       </div>
 
-      <div class="card">
-        <div class="body">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="zmdi zmdi-search"></i></span>
-                </div>
-                <input type="text" class="form-control"[(ngModel)] ="filterText" name="firstname"placeholder="Search...">
-            </div>
-        </div>
-      </div>
+      
      
-       <div class="card"*ngIf="filterText">
-        <div class="list-group">
-          <div class="list-group-item" *ngFor="let item of (employeesAndDepartments | filter: filterText); let foundResults = count">              <ng-container *ngIf="item.firstname">
-                <h5 class="list-group-item-heading"(click)="OpenEmployeeDetail(item.employeeid)">Employee: {{ item.firstname }} {{ item.lastname }}</h5>
-              
-              </ng-container>
-          
-              <ng-container *ngIf="item.departmentname">
-                <h5 class="list-group-item-heading"(click)="OpenDepartmentDetail(item.departmentid)">Department: <span class="col-green">{{ item.departmentname }}</span></h5>
-              </ng-container>
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"(click)="searchEmployees()"><i class="zmdi zmdi-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)] ="searchTerm" placeholder="Search..."(keyup)="searchEmployees()">
+                    </div>
 
-              <div class="list-group-item" *ngIf="!item.departmentname && !item.firstname">
-                <h5 class="list-group-item-heading text-danger">No matching employees or departments found</h5>
-              </div>
+                </div>
             </div>
+            <div class="text-danger" *ngIf="employees.length === 0 && noResultsMessage !== ''">
+              {{ noResultsMessage }}
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 c_table search_page"*ngFor="let employee of employees">
+                <thead>
+                  <tr>
+                      <th style="color: #555;">Image</th>
+                      <th style="color: #555;">First Name</th>
+                      <th style="color: #555;">Last Name</th>
+                      <th style="color: #555;" data-breakpoints="xs md">Department</th>
+                      <th style="color: #555;" data-breakpoints="xs md">Hire Date</th>
+
+                  </tr>
+                </thead>
+                  <tbody>
+                        <tr (click)="OpenEmployeeDetail(employee.id)">
+                          <td><img src="assets/img/{{employee.image}}"  width="48" alt="profile-image"></td>
+                          <td><span class="text-muted">{{ employee.firstName }}</span></td>
+                          <td><span class="text-muted">{{ employee.lastName }}</span></td>
+                          <td><span class=" text-muted col-green">{{employee.departmentName }}</span></td>
+                          <td><span class="col-green">{{ employee.hireDate | date: 'mediumDate' }}</span></td>
+
+                         </tr>
+                   
+                  </tbody>
+              </table>
           </div>
-          
+        </div>
+  
     </div>
     </div>
   </ng-template>
@@ -92,28 +109,16 @@
     <div class="dialog-header">
     <h2>Employee Detail</h2>
     </div>
-    <div *ngIf="Employee">
-      <p><strong>First Name:</strong> {{ Employee.firstname }}</p>
-      <p><strong>Last Name:</strong> {{ Employee.lastname }}</p>
-      <p><strong>Email:</strong> {{ Employee.email }}</p>
-      <p><strong>Phone:</strong> {{ Employee.phone }}</p>
-      <p><strong>Department:</strong> {{ Employee.departmentname }}</p>
-      <p><strong>Salary:</strong> {{ Employee.salary }}</p>
+    <div *ngIf="employee">
+      <p><strong>First Name:</strong> {{ employee.firstname }}</p>
+      <p><strong>Last Name:</strong> {{ employee.lastname }}</p>
+      <p><strong>Email:</strong> {{ employee.email }}</p>
+      <p><strong>Phone:</strong> {{ employee.phone }}</p>
+      <p><strong>Department:</strong> {{ employee.departmentName }}</p>
+      <p><strong>Salary:</strong> {{ employee.salary }}</p>
   
     </div>
     </div>
     </ng-template>
 
     
-<ng-template #callDetailDepartment>
-    <div class="mat-dialog-container">
-    <div class="dialog-header">
-    <h2>Department Detail</h2>
-    </div>
-    <div *ngIf="department">
-      <p><strong>Department Name:</strong> {{ department.departmentname }}</p>
-      <p><strong>Department Location:</strong> {{ department.departmentlocation }}</p>
-    
-    </div>
-    </div>
-    </ng-template>

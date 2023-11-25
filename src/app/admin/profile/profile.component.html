@@ -27,27 +27,20 @@
                             <form [formGroup]="updateForm">
 
                             <div class="row">
+                            
                                 <div class="col-lg-4 col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Username"formControlName="userName">
-                                        <mat-error *ngIf="updateForm.get('userName')?.hasError('required')">Username is required</mat-error>
-
+                                        <input type="password" class="form-control"formControlName="password"(change)="matchError()"  placeholder="New Password">
                                     </div>
-
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <input type="password" class="form-control"formControlName="password"(change)="matchError()"  placeholder="Current Password">
-                                    </div>
-                                    <mat-error *ngIf="updateForm.get('password')?.hasError('required')">Password is required</mat-error>
-                                    <mat-error *ngIf="updateForm.get('password')?.hasError('minlength')">Password must be at least 8 </mat-error>
+                                    <mat-error *ngIf="updateForm.get('password')?.hasError('required')"> New password is required</mat-error>
+                                    <mat-error *ngIf="updateForm.get('password')?.hasError('minlength')">New password must be at least 8 </mat-error>
                                 </div>
                                 <div class="col-lg-4 col-md-12">
                                     <div class="form-group">
                                         <input type="password" class="form-control"formControlName="confirmPassword"(change)="matchError()" placeholder="New Password">
                                     </div>
                                     <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
-                                    <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('minlength')">Password must be at least 8</mat-error>
+                                    <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('minlength')">Confirm password must be at least 8</mat-error>
                                 
                                     <mat-error *ngIf="updateForm.get('confirmPassword')?.hasError('misMatch')">Passwords do not match</mat-error>
                                 </div>
