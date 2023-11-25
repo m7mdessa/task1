@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
    });
 
    passwordForm : FormGroup = new FormGroup({ 
-    id: new FormControl(),
+    employeeId: new FormControl(),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
    });
@@ -71,8 +71,8 @@ export class ProfileComponent implements OnInit {
       console.log('No user data found in local storage.');
     }
     
-    this.passwordForm.get('id')?.setValue(employeeId);
-    this.employee.UpdateEmployeePassword(this.passwordForm.value).subscribe(
+    this.passwordForm.get('employeeId')?.setValue(employeeId);
+    this.employeeService.UpdateEmployeePassword(this.passwordForm.value).subscribe(
       (responsee) => {
         console.log( this.passwordForm.value);
 

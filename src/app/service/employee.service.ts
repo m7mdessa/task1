@@ -41,6 +41,11 @@ export class EmployeeService {
   deleteEmployee(id:number): Observable<any> {
     return this.http.delete('https://localhost:7088/api/Employee/Delete/'+id);
   }
+  
+  UpdateEmployeePassword(employee: any): Observable<any> {
 
+    return this.http.put('https://localhost:7088/api/Employee/UpdatePassword/', employee);
+
+  }
   
 }

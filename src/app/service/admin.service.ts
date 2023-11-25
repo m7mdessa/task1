@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AdminService {
-  [x: string]: any;
   constructor(private http: HttpClient) {}
 
  

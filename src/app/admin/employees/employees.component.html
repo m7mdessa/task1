@@ -164,7 +164,7 @@
 <mat-form-field>
   <mat-label>Select Department</mat-label>
 <mat-select formControlName="departmentId" required>
-<mat-option *ngFor="let department of departments" [value]="department.departmentId">
+<mat-option *ngFor="let department of departments" [value]="department.id">
   {{ department.departmentName }}
 </mat-option>
 </mat-select>
@@ -232,8 +232,8 @@
         <div class="form-field-spacer"></div>
         <mat-form-field>
           <mat-label>Select Department</mat-label>
-      <mat-select formControlName="departmentId" required>
-        <mat-option *ngFor="let department of departments" [value]="department.departmentId">
+      <mat-select formControlName="departmentId" >
+        <mat-option *ngFor="let department of departments" [value]="department.id">
           {{ department.departmentName }}
         </mat-option>
       </mat-select>

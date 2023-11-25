@@ -15,7 +15,6 @@ import { EmployeeService } from 'src/app/service/employee.service';
 export class SidebarComponent implements OnInit {
   @ViewChild('callSearchDialog') callSearchDialog! :TemplateRef<any>
   @ViewChild('callDetailEmployee') callDetailEmployee! :TemplateRef<any>
-  @ViewChild('callDetailDepartment') callDetailDepartment! :TemplateRef<any>
 
   employees: any[] = [];
   employee: any;

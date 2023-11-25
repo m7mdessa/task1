@@ -3,7 +3,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { ProfileService } from 'src/app/service/profile.service';
+import { AdminService } from 'src/app/service/admin.service';
 import { UserLoginService } from 'src/app/service/userlogin.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
 
   profile: any;
 
-  constructor(private admin: ProfileService,private userLogin: UserLoginService,private toastr: ToastrService,private dialog:MatDialog ) {}
+  constructor(private admin: AdminService,private userLogin: UserLoginService,private toastr: ToastrService,private dialog:MatDialog ) {}
 
   
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
       console.log('No user data found in local storage.');
     }
     this.updateForm.get('id')?.setValue(userId);
-    this.userLogin.updateUser(this.updateForm.value).subscribe(
+    this.admin.updateAdmin(this.updateForm.value).subscribe(
       (responsee) => {
         console.log( this.updateForm.value);
 
